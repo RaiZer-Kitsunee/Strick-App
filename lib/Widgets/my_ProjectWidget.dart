@@ -15,6 +15,7 @@ class MyProjectWidget extends StatelessWidget {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
+          // TODO: make a backImages for the projects
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.all(
             Radius.circular(40),
