@@ -24,7 +24,7 @@ class MyTimeline extends StatelessWidget {
           isFirst: isFirst,
           isLast: isLast,
           beforeLineStyle: LineStyle(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.surface,
             thickness: 3,
           ),
           indicatorStyle: IndicatorStyle(
@@ -39,7 +39,7 @@ class MyTimeline extends StatelessWidget {
                   border: Border.all(
                     width: 3,
                     color: isFirst || isLast
-                        ? Theme.of(context).colorScheme.primary
+                        ? Theme.of(context).colorScheme.secondary
                         : Theme.of(context).colorScheme.surface,
                   ),
                   borderRadius: BorderRadius.circular(50),
@@ -50,14 +50,14 @@ class MyTimeline extends StatelessWidget {
             child: Container(
               height: 120,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).colorScheme.primary,
-                    blurRadius: 10,
+                    blurRadius: 5,
                   ),
                 ],
               ),
@@ -72,7 +72,7 @@ class MyTimeline extends StatelessWidget {
                           overflow: TextOverflow.clip,
                           title,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).colorScheme.surface,
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                           ),
@@ -81,7 +81,7 @@ class MyTimeline extends StatelessWidget {
                         Text(
                           description,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).colorScheme.surface,
                             fontSize: 16,
                           ),
                         ),
@@ -98,7 +98,7 @@ class MyTimeline extends StatelessWidget {
                           child: Text(
                             "9:00",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -109,14 +109,14 @@ class MyTimeline extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             width: 30,
                             height: 30,
                             child: Icon(
                               Icons.done,
-                              color: Theme.of(context).colorScheme.surface,
+                              color: Theme.of(context).colorScheme.secondary,
                               size: 25,
                             ),
                           ),

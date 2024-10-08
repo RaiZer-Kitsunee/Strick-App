@@ -7,6 +7,7 @@ class ProjectTasks {
   String description;
   bool isFirst;
   bool isLast;
+  bool isDone;
 
   ProjectTasks({
     required this.title,
@@ -16,6 +17,7 @@ class ProjectTasks {
     required this.description,
     required this.isFirst,
     required this.isLast,
+    this.isDone = false,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,7 +28,8 @@ class ProjectTasks {
       // 'end': end.millisecondsSinceEpoch,
       'description': description,
       'isFirst': isFirst,
-      'isLast': isLast
+      'isLast': isLast,
+      'isDone': isDone
     };
   }
 
@@ -39,6 +42,7 @@ class ProjectTasks {
       description: json['description'] as String,
       isFirst: json['isFirst'],
       isLast: json['isLast'],
+      isDone: json['isDone'],
     );
   }
 }

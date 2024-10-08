@@ -32,7 +32,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.all(
             Radius.circular(15),
           ),
@@ -40,7 +40,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
             BoxShadow(
               color: Theme.of(context).colorScheme.primary,
               offset: Offset(0, 2),
-              blurRadius: 10,
+              blurRadius: 5,
             ),
           ],
         ),
@@ -55,10 +55,10 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                     Transform.scale(
                       scale: 1.3,
                       child: Checkbox(
-                        activeColor: Theme.of(context).colorScheme.surface,
-                        checkColor: Theme.of(context).colorScheme.secondary,
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        checkColor: Theme.of(context).colorScheme.surface,
                         side: BorderSide(
-                            color: Theme.of(context).colorScheme.surface),
+                            color: Theme.of(context).colorScheme.secondary),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),
@@ -81,11 +81,13 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          color: Theme.of(context).colorScheme.surface,
+                          color: Theme.of(context).colorScheme.secondary,
                           decoration: simpleTasksList[widget.simpleindex].isDone
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
-                          decorationThickness: 1.5,
+                          decorationThickness: 2.5,
+                          decorationColor:
+                              Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ),
@@ -96,7 +98,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                   height: 10,
                   width: 10,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.all(
                       Radius.circular(50),
                     ),
@@ -105,10 +107,6 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
               ],
             ),
           ),
-          // child: ListTile(
-          // leading:
-          // title:
-          // trailing:
         ),
       ),
     );

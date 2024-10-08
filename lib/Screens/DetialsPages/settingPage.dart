@@ -37,7 +37,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,9 +46,12 @@ class _SettingPageState extends State<SettingPage> {
               left: 25,
               top: 50,
             ),
-            child: const Text(
+            child: Text(
               'Settings',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.secondary),
             ),
           ),
           Column(
@@ -64,10 +67,10 @@ class _SettingPageState extends State<SettingPage> {
                     Provider.of<ThemeProvider>(context, listen: false)
                         .toggleTheme();
                   },
-                  activeColor: Theme.of(context).colorScheme.surface,
-                  activeTrackColor: Theme.of(context).colorScheme.secondary,
-                  inactiveTrackColor: Theme.of(context).colorScheme.secondary,
-                  inactiveThumbColor: Theme.of(context).colorScheme.surface,
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeTrackColor: Theme.of(context).colorScheme.surface,
+                  inactiveTrackColor: Theme.of(context).colorScheme.surface,
+                  inactiveThumbColor: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               custom_button(
@@ -88,7 +91,7 @@ class _SettingPageState extends State<SettingPage> {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(

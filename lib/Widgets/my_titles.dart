@@ -41,7 +41,7 @@ class _MyTitlesState extends State<MyTitles> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
                   ),
@@ -57,7 +57,7 @@ class _MyTitlesState extends State<MyTitles> {
                     height: widget.selected ? 60 : 30,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: widget.selected
@@ -66,7 +66,7 @@ class _MyTitlesState extends State<MyTitles> {
                               onPressed: widget.onPressedBack,
                               icon: Icon(
                                 Icons.arrow_back_ios,
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Theme.of(context).colorScheme.surface,
                               ),
                             ),
                             title: TextField(
@@ -80,14 +80,13 @@ class _MyTitlesState extends State<MyTitles> {
                                 ),
                               ),
                               style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                  color: Theme.of(context).colorScheme.surface),
                             ),
                             trailing: IconButton(
                               onPressed: widget.onPressedAdd,
                               icon: Icon(
                                 Icons.add,
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Theme.of(context).colorScheme.surface,
                                 size: 30,
                               ),
                             ),
@@ -96,7 +95,7 @@ class _MyTitlesState extends State<MyTitles> {
                             widget.title2,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.surface,
                             ),
                           ),
                   ),

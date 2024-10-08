@@ -23,7 +23,7 @@ class _ProjectPageState extends State<ProjectPage> {
             padding: const EdgeInsets.only(left: 5, top: 25),
             child: IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_new,
                 size: 25,
               ),
@@ -53,7 +53,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     ),
                   ),
                   icon: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(20),
@@ -65,8 +65,9 @@ class _ProjectPageState extends State<ProjectPage> {
                           color: Theme.of(context).colorScheme.secondary,
                         ),
                         Text(
-                          "add Task",
+                          "Add Task",
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                         )
@@ -78,8 +79,7 @@ class _ProjectPageState extends State<ProjectPage> {
             ],
           ),
           Container(
-            padding: EdgeInsets.all(0),
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             width: MediaQuery.sizeOf(context).width,
             height: 120,
             decoration: BoxDecoration(
@@ -93,14 +93,38 @@ class _ProjectPageState extends State<ProjectPage> {
               padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
               child: Column(
                 children: [
-                  Text(
-                    "Object:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "[ ",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Object:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " ]",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  SizedBox(height: 5),
                   Text(
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.left,
@@ -116,15 +140,15 @@ class _ProjectPageState extends State<ProjectPage> {
           ),
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left: 15),
+              const Padding(
+                padding: EdgeInsets.only(top: 15, left: 15),
                 child: Text(
                   "So What are we doing: ",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 5, top: 15),
+                margin: const EdgeInsets.only(left: 5, top: 15),
                 color: Theme.of(context).colorScheme.primary,
                 height: 2,
                 width: 170,

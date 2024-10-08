@@ -16,14 +16,14 @@ class MyProjectWidget extends StatelessWidget {
         width: 200,
         decoration: BoxDecoration(
           // TODO: make a backImages for the projects
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.all(
             Radius.circular(40),
           ),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).colorScheme.primary,
-              blurRadius: 10,
+              blurRadius: 5,
             ),
           ],
         ),
@@ -40,12 +40,12 @@ class MyProjectWidget extends StatelessWidget {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Icon(
                       Icons.games,
-                      color: Theme.of(context).colorScheme.surface,
+                      color: Theme.of(context).colorScheme.secondary,
                       size: 30,
                     ),
                   ),
@@ -56,7 +56,7 @@ class MyProjectWidget extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       title,
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -70,14 +70,14 @@ class MyProjectWidget extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(bottom: 15, right: 15),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 width: 40,
                 height: 40,
                 child: Icon(
                   Icons.keyboard_arrow_right_rounded,
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.secondary,
                   size: 35,
                 ),
               ),

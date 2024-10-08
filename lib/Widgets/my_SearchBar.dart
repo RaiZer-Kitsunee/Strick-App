@@ -14,7 +14,7 @@ class MySearchBar extends StatelessWidget {
         height: 60,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Colors.grey,
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
           ),
@@ -22,14 +22,15 @@ class MySearchBar extends StatelessWidget {
         child: ListTile(
           leading: Icon(
             Icons.search_rounded,
-            color: Theme.of(context).colorScheme.surface,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           title: TextField(
+            autofocus: false,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: "Search",
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),
@@ -39,14 +40,14 @@ class MySearchBar extends StatelessWidget {
               height: 35,
               width: 35,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
               ),
               child: Icon(
                 Icons.dns_rounded,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.surface,
               ),
             ),
           ),

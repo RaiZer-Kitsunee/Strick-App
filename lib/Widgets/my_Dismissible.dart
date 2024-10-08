@@ -32,13 +32,13 @@ Dismissible MyDismissible(
                       context: context,
                       name: "Y E S",
                       padding: EdgeInsets.only(left: 30),
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.surface,
                       booling: true),
                   dialogbutton(
                       context: context,
                       name: "N O",
                       padding: EdgeInsets.only(right: 30),
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.surface,
                       booling: false),
                 ],
               )
@@ -80,7 +80,9 @@ Padding dialogbutton(
             borderRadius: BorderRadius.circular(15), color: color),
         child: Text(
           name,
-          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+              fontWeight: FontWeight.bold),
         ),
       ),
     ),

@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           Stack(
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width,
                 height: 220,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: Theme.of(context).colorScheme.secondary,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(40),
                     bottomRight: Radius.circular(40),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "Hey RaiZer !",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 15,
                             ),
                           ),
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                               overflow: TextOverflow.ellipsis,
                               "Let's make some tasks",
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Theme.of(context).colorScheme.surface,
                                 fontSize: 20,
                               ),
                             ),
@@ -214,12 +214,12 @@ class _HomePageState extends State<HomePage> {
     return SnackBar(
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 10),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       content: Text(
         "you have to go to setting or reset the app",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.surface,
         ),
       ),
     );
@@ -244,13 +244,13 @@ class IfThereISNothing extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             Icon(
               Icons.task,
               size: 30,
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.secondary,
             )
           ],
         ),
