@@ -68,7 +68,6 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                             simpleTasksList[widget.simpleindex].isDone = value!;
                           });
                           saveIntoSp();
-                          print(simpleTasksList[widget.simpleindex].isDone);
                         },
                       ),
                     ),

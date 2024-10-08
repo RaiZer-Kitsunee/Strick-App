@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class MyProjectWidget extends StatelessWidget {
   final String title;
@@ -27,62 +29,39 @@ class MyProjectWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Icon(
-                      Icons.games,
-                      color: Theme.of(context).colorScheme.secondary,
-                      size: 30,
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 70),
+                width: 120,
+                child: Text(
+                  overflow: TextOverflow.clip,
+                  title,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.surface,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 15),
-                  SizedBox(
-                    width: 160,
-                    child: Text(
-                      overflow: TextOverflow.clip,
-                      title,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 15, right: 15),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                width: 40,
-                height: 40,
-                child: Icon(
-                  Icons.keyboard_arrow_right_rounded,
-                  color: Theme.of(context).colorScheme.secondary,
-                  size: 35,
                 ),
               ),
-            )
-          ],
+              //! for this to work after you finish the tasks do this
+              //! donetask * 100 / number of tasks / 100 = 0.?
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30, left: 60),
+                child: CircularPercentIndicator(
+                  radius: 50,
+                  lineWidth: 7,
+                  percent: 0.8,
+                  center: Text("80%"),
+                  progressColor: Colors.blueAccent,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

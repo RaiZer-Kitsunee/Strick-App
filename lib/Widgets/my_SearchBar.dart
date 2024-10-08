@@ -1,30 +1,27 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:strick_app/Models/simpleTaskModel.dart';
-import 'package:strick_app/Shared/allTheLists.dart';
 
 class MySearchBar extends StatelessWidget {
-  final VoidCallback onRefrech;
   final VoidCallback onTap;
-  const MySearchBar({super.key, required this.onRefrech, required this.onTap});
+  const MySearchBar({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    void runFilter(String enteredKeyword) {
-      List<SimpleTask> results = [];
-      if (enteredKeyword.isEmpty) {
-        results = simpleTasksList;
-      } else {
-        results = simpleTasksList
-            .where((element) => element.title
-                .toLowerCase()
-                .contains(enteredKeyword.toLowerCase()))
-            .toList();
-      }
-      simpleTasksList = results;
-      onRefrech();
-    }
+    // void runFilter(String enteredKeyword) {
+    //   List<SimpleTask> results = [];
+    //   if (enteredKeyword.isEmpty) {
+    //     results = simpleTasksList;
+    //   } else {
+    //     results = simpleTasksList
+    //         .where((element) => element.title
+    //             .toLowerCase()
+    //             .contains(enteredKeyword.toLowerCase()))
+    //         .toList();
+    //   }
+    //   foundSTasksList = results;
+    //   onRefrech();
+    // }
 
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
@@ -44,8 +41,8 @@ class MySearchBar extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           title: TextField(
-            onTap: onTap,
-            onChanged: (value) => runFilter(value),
+            readOnly: true,
+            // onChanged: (value) => runFilter(value),
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
             ),
@@ -59,7 +56,7 @@ class MySearchBar extends StatelessWidget {
             ),
           ),
           trailing: InkWell(
-            onTap: null,
+            onTap: onTap,
             child: Container(
               height: 35,
               width: 35,

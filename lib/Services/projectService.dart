@@ -5,3 +5,8 @@ import 'package:strick_app/Shared/allTheLists.dart';
 void addProject({required String title, required String object}) {
   projectsList.add(Projects(title: title, object: object, inerTasks: []));
 }
+
+//* and this to delete Projects
+void deleteProject({required int index}) {
+  projectsList.removeAt(index);
+}

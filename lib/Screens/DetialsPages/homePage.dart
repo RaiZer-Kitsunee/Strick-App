@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool selected = false;
-  bool isSearching = false;
+  bool isOnlyTask = false;
 
   TextEditingController projectsController = TextEditingController();
 
@@ -137,15 +137,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Positioned(
-                  top: 170,
-                  child: MySearchBar(
-                    onTap: () {
-                      setState(() {
-                        isSearching = !isSearching;
-                      });
-                    },
-                    onRefrech: () => setState(() {}),
-                  ))
+                top: 170,
+                child: MySearchBar(
+                  onTap: () {
+                    setState(() {
+                      isOnlyTask = !isOnlyTask;
+                    });
+                  },
+                ),
+              )
             ],
           ),
           SizedBox(height: 10),
@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.sizeOf(context).height / 1.50,
             child: ListView(
               children: [
-                isSearching
+                isOnlyTask
                     ? Container()
                     : Column(
                         children: [
@@ -177,9 +177,6 @@ class _HomePageState extends State<HomePage> {
                                 projectsController.clear();
                                 selected = !selected;
                               });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                _snakbar(),
-                              );
                             },
                             onTap: () {
                               setState(() {
@@ -188,10 +185,10 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          const MySlider(),
+                          MySlider(onRefrech: () => setState(() {})),
+                          const SizedBox(height: 10),
                         ],
                       ),
-                const SizedBox(height: 10),
                 MyTitles(
                   title1: "Tasks",
                   title2: "Add Task",
@@ -227,21 +224,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  SnackBar _snakbar() {
-    return SnackBar(
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 10),
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      content: Text(
-        "you have to go to setting or reset the app",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.surface,
-        ),
-      ),
-    );
-  }
 }
 
 class IfThereISNothing extends StatelessWidget {
@@ -254,7 +236,7 @@ class IfThereISNothing extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: EdgeInsets.only(top: 25),
+        padding: EdgeInsets.only(top: 15),
         child: Column(
           children: [
             Text(
@@ -265,9 +247,10 @@ class IfThereISNothing extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
+            SizedBox(height: 15),
             Icon(
-              Icons.task,
-              size: 30,
+              Icons.note_add_rounded,
+              size: 70,
               color: Theme.of(context).colorScheme.secondary,
             )
           ],
