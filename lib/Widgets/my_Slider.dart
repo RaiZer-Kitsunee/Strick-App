@@ -62,6 +62,7 @@ class MySlider extends StatelessWidget {
                     },
                     child: MyProjectWidget(
                       title: projectsList[index].title,
+                      object: projectsList[index].object,
                     ),
                   );
                 },

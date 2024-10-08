@@ -1,69 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class MyProjectWidget extends StatelessWidget {
   final String title;
+  final String object;
 
   const MyProjectWidget({
     super.key,
     required this.title,
+    required this.object,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      child: Container(
-        width: 200,
-        decoration: BoxDecoration(
-          // TODO: make a backImages for the projects
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.all(
-            Radius.circular(40),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.primary,
-              blurRadius: 5,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          child: Container(
+            width: 200,
+            decoration: BoxDecoration(
+              // TODO: make a backImages for the projects
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.all(
+                Radius.circular(40),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).colorScheme.primary,
+                  blurRadius: 5,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 70),
-                width: 120,
-                child: Text(
-                  overflow: TextOverflow.clip,
-                  title,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.surface,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //! for this to work after you finish the tasks do this
+                  //! donetask * 100 / number of tasks / 100 = 0.?
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: CircularPercentIndicator(
+                        radius: 50,
+                        lineWidth: 8,
+                        percent: 0.6,
+                        center: Text("60%"),
+                        progressColor: Colors.blueAccent,
+                      ),
+                    ),
                   ),
-                ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        width: 120,
+                        child: Text(
+                          overflow: TextOverflow.clip,
+                          title,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 40),
+                        width: 150,
+                        child: Text(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          object,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              //! for this to work after you finish the tasks do this
-              //! donetask * 100 / number of tasks / 100 = 0.?
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30, left: 60),
-                child: CircularPercentIndicator(
-                  radius: 50,
-                  lineWidth: 7,
-                  percent: 0.8,
-                  center: Text("80%"),
-                  progressColor: Colors.blueAccent,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            margin: EdgeInsets.only(right: 5),
+            alignment: Alignment.center,
+            height: 130,
+            width: 30,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(500),
+                  bottomLeft: Radius.circular(500)),
+            ),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 25,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -67,7 +67,7 @@ class AddTaskPage extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.purple.shade400,
+                      color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(5000),
                     ),
                     child: Icon(

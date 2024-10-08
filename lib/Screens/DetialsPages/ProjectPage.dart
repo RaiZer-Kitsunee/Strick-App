@@ -101,7 +101,7 @@ class _ProjectPageState extends State<ProjectPage> {
                           TextSpan(
                             text: "[ ",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.blueAccent,
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
                             ),
@@ -116,7 +116,7 @@ class _ProjectPageState extends State<ProjectPage> {
                           TextSpan(
                             text: " ]",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.blueAccent,
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
                             ),
