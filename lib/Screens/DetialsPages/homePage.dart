@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool selected = false;
+  bool isSearching = false;
 
   TextEditingController projectsController = TextEditingController();
 
@@ -135,7 +136,16 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Positioned(top: 170, child: MySearchBar())
+              Positioned(
+                  top: 170,
+                  child: MySearchBar(
+                    onTap: () {
+                      setState(() {
+                        isSearching = !isSearching;
+                      });
+                    },
+                    onRefrech: () => setState(() {}),
+                  ))
             ],
           ),
           SizedBox(height: 10),
@@ -144,37 +154,43 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.sizeOf(context).height / 1.50,
             child: ListView(
               children: [
-                MyTitles(
-                  title1: "Projects",
-                  title2: "Add Project",
-                  selected: selected,
-                  textEditingController: projectsController,
-                  onPressedBack: () {
-                    setState(() {
-                      selected = !selected;
-                      projectsController.clear();
-                    });
-                  },
-                  onPressedAdd: () {
-                    addProject(
-                        title: projectsController.text,
-                        object: "in till i do object");
-                    setState(() {
-                      projectsController.clear();
-                      selected = !selected;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      _snakbar(),
-                    );
-                  },
-                  onTap: () {
-                    setState(() {
-                      selected = !selected;
-                    });
-                  },
-                ),
-                const SizedBox(height: 10),
-                const MySlider(),
+                isSearching
+                    ? Container()
+                    : Column(
+                        children: [
+                          MyTitles(
+                            title1: "Projects",
+                            title2: "Add Project",
+                            selected: selected,
+                            textEditingController: projectsController,
+                            onPressedBack: () {
+                              setState(() {
+                                selected = !selected;
+                                projectsController.clear();
+                              });
+                            },
+                            onPressedAdd: () {
+                              addProject(
+                                  title: projectsController.text,
+                                  object: "in till i do object");
+                              setState(() {
+                                projectsController.clear();
+                                selected = !selected;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                _snakbar(),
+                              );
+                            },
+                            onTap: () {
+                              setState(() {
+                                selected = !selected;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          const MySlider(),
+                        ],
+                      ),
                 const SizedBox(height: 10),
                 MyTitles(
                   title1: "Tasks",
@@ -187,6 +203,7 @@ class _HomePageState extends State<HomePage> {
                 simpleTasksList.isEmpty
                     ? IfThereISNothing()
                     : ListView.builder(
+                        reverse: true,
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: simpleTasksList.length,
@@ -201,7 +218,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                             refrech: () => setState(() {}),
                           );
-                        })
+                        },
+                      )
               ],
             ),
           ),

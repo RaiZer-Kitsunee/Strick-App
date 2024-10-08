@@ -1,12 +1,31 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:strick_app/Models/simpleTaskModel.dart';
+import 'package:strick_app/Shared/allTheLists.dart';
 
 class MySearchBar extends StatelessWidget {
-  const MySearchBar({super.key});
+  final VoidCallback onRefrech;
+  final VoidCallback onTap;
+  const MySearchBar({super.key, required this.onRefrech, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    void runFilter(String enteredKeyword) {
+      List<SimpleTask> results = [];
+      if (enteredKeyword.isEmpty) {
+        results = simpleTasksList;
+      } else {
+        results = simpleTasksList
+            .where((element) => element.title
+                .toLowerCase()
+                .contains(enteredKeyword.toLowerCase()))
+            .toList();
+      }
+      simpleTasksList = results;
+      onRefrech();
+    }
+
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: Container(
@@ -25,12 +44,17 @@ class MySearchBar extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           title: TextField(
+            onTap: onTap,
+            onChanged: (value) => runFilter(value),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             autofocus: false,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: "Search",
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
