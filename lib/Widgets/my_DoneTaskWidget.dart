@@ -5,11 +5,11 @@ import 'package:strick_app/Services/simpleTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheetEdit.dart';
 
-class MyTaskWidget extends StatefulWidget {
+class MyDoneTaskWidget extends StatefulWidget {
   final String title;
   final int simpleindex;
   final VoidCallback refrech;
-  const MyTaskWidget({
+  const MyDoneTaskWidget({
     super.key,
     required this.title,
     required this.simpleindex,
@@ -17,10 +17,10 @@ class MyTaskWidget extends StatefulWidget {
   });
 
   @override
-  State<MyTaskWidget> createState() => _MyTaskWidgetState();
+  State<MyDoneTaskWidget> createState() => _MyDoneTaskWidgetState();
 }
 
-class _MyTaskWidgetState extends State<MyTaskWidget> {
+class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -55,21 +55,28 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                     Transform.scale(
                       scale: 1.3,
                       child: Checkbox(
-                        activeColor: Theme.of(context).colorScheme.secondary,
-                        checkColor: Theme.of(context).colorScheme.surface,
+                        activeColor: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.8),
+                        checkColor: Theme.of(context)
+                            .colorScheme
+                            .surface
+                            .withOpacity(0.8),
                         side: BorderSide(
                             color: Theme.of(context).colorScheme.secondary),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        value: simpleTasksList[widget.simpleindex].isDone,
+                        value: doneSimpleTaskList[widget.simpleindex].isDone,
                         onChanged: (value) {
-                          simpleTasksList[widget.simpleindex].isDone = value!;
+                          doneSimpleTaskList[widget.simpleindex].isDone =
+                              value!;
 
                           setState(() {
-                            doneSimpleTaskList
-                                .add(simpleTasksList[widget.simpleindex]);
-                            simpleTasksList.removeAt(widget.simpleindex);
+                            simpleTasksList
+                                .add(doneSimpleTaskList[widget.simpleindex]);
+                            doneSimpleTaskList.removeAt(widget.simpleindex);
                           });
                           widget.refrech();
                           saveIntoSp();
@@ -85,10 +92,14 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          color: Theme.of(context).colorScheme.secondary,
-                          decoration: simpleTasksList[widget.simpleindex].isDone
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.8),
+                          decoration:
+                              doneSimpleTaskList[widget.simpleindex].isDone
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
                           decorationThickness: 2.5,
                           decorationColor:
                               Theme.of(context).colorScheme.secondary,

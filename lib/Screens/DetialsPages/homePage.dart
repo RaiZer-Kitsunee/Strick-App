@@ -9,6 +9,8 @@ import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheet.dart';
 import 'package:strick_app/Widgets/my_Dismissible.dart';
+import 'package:strick_app/Widgets/my_DoneDismissible.dart';
+import 'package:strick_app/Widgets/my_DoneTaskWidget.dart';
 import 'package:strick_app/Widgets/my_SearchBar.dart';
 import 'package:strick_app/Widgets/my_Slider.dart';
 import 'package:strick_app/Widgets/my_TaskWidgat.dart';
@@ -37,11 +39,16 @@ class _HomePageState extends State<HomePage> {
   readFromSp() {
     //* For simple tasks
     String? loadedStringList = pref.getString(simpleTaskKey);
+    String? loadedStringDoneList = pref.getString(doneSimpleTaskKey);
 
     List<dynamic> loadedJsonList = jsonDecode(loadedStringList!);
+    List<dynamic> loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
 
     simpleTasksList =
         loadedJsonList.map((element) => SimpleTask.fromJson(element)).toList();
+    doneSimpleTaskList = loadedJsonDoneList
+        .map((element) => SimpleTask.fromJson(element))
+        .toList();
     setState(() {});
   }
 
@@ -190,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                 MyTitles(
-                  title1: "Tasks",
+                  title1: "Daily Tasks",
                   title2: "Add Task",
                   selected: false,
                   textEditingController: projectsController,
@@ -216,11 +223,88 @@ class _HomePageState extends State<HomePage> {
                             refrech: () => setState(() {}),
                           );
                         },
-                      )
+                      ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        height: 3,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(500),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "Complete Task",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        height: 3,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(500),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                doneSimpleTaskList.isEmpty
+                    ? IfThereISNothing2()
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: doneSimpleTaskList.length,
+                        itemBuilder: (context, index) {
+                          return MyDoneDismissible(
+                            context: context,
+                            index: index,
+                            child: MyDoneTaskWidget(
+                                title: doneSimpleTaskList[index].title,
+                                simpleindex: index,
+                                refrech: () => setState(() {})),
+                            refrech: () => setState(() {}),
+                          );
+                        },
+                      ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class IfThereISNothing2 extends StatelessWidget {
+  const IfThereISNothing2({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: EdgeInsets.only(top: 15),
+        child: Column(
+          children: [
+            Text(
+              "No completed tasks yet",
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -236,7 +320,7 @@ class IfThereISNothing extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: EdgeInsets.only(top: 15),
+        padding: EdgeInsets.only(top: 15, bottom: 15),
         child: Column(
           children: [
             Text(

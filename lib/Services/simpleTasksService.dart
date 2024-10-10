@@ -10,11 +10,15 @@ Future<void> saveIntoSp() async {
   //convert the data to json
   List<Map<String, dynamic>> jsonStringList =
       simpleTasksList.map((element) => element.toJson()).toList();
+  List<Map<String, dynamic>> jsonStringDoneList =
+      doneSimpleTaskList.map((element) => element.toJson()).toList();
 
   //convert the json to string
   String jsonString = jsonEncode(jsonStringList);
+  String jsonStringDone = jsonEncode(jsonStringDoneList);
 
   //save the data into the shared preferences
+  await pref.setString(doneSimpleTaskKey, jsonStringDone);
   await pref.setString(simpleTaskKey, jsonString);
 }
 
@@ -33,5 +37,11 @@ void updateSimpleTasks({required String newTilte, required int index}) {
 //* delete Simple Tasks
 void deleteSimpleTasks({required int index}) {
   simpleTasksList.removeAt(index);
+  saveIntoSp();
+}
+
+//* delete Done Simple Tasks
+void deleteDoneSimpleTasks({required int index}) {
+  doneSimpleTaskList.removeAt(index);
   saveIntoSp();
 }

@@ -41,7 +41,7 @@ class MyProjectWidget extends StatelessWidget {
                   //! for this to work after you finish the tasks do this
                   //! donetask * 100 / number of tasks / 100 = 0.?
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 20, left: 5),
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: CircularPercentIndicator(

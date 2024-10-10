@@ -4,6 +4,8 @@ import 'package:strick_app/Models/simpleTaskModel.dart';
 
 List<SimpleTask> simpleTasksList = [];
 
+List<SimpleTask> doneSimpleTaskList = [];
+
 List<Projects> projectsList = [
   Projects(
     title: "Game project",
