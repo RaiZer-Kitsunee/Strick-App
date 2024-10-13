@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:strick_app/Services/simpleTasksService.dart';
 
-void myBSheetEdit({
+import 'package:strick_app/Shared/allTheLists.dart';
+
+void myBDSheet({
   required BuildContext context,
-  required int simpleindex,
   required VoidCallback refrech,
+  required int index,
   required TextEditingController textEditingController,
 }) {
   showModalBottomSheet(
@@ -23,7 +24,7 @@ void myBSheetEdit({
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Editing Task : ",
+                  "What is the Object Boss : ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.surface,
                     fontSize: 18,
@@ -41,7 +42,7 @@ void myBSheetEdit({
                     prefixIcon: Icon(Icons.edit_square),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.secondary,
-                    hintText: "Destroy the World",
+                    hintText: "i Dont Khow",
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -78,10 +79,10 @@ void myBSheetEdit({
                       child: TextButton(
                         onPressed: () {
                           if (textEditingController.text.isNotEmpty) {
-                            updateSimpleTasks(
-                                newTilte: textEditingController.text,
-                                index: simpleindex);
+                            projectsList[index].object =
+                                textEditingController.text;
                             refrech();
+                            textEditingController.clear();
                             Navigator.pop(context);
                           } else {
                             print("-------------- is Empty HAHA");

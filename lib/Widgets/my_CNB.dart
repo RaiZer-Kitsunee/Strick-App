@@ -18,7 +18,7 @@ class _MyCNBState extends State<MyCNB> {
       color: Theme.of(context).colorScheme.secondary,
       backgroundColor: Theme.of(context).colorScheme.surface,
       animationDuration: const Duration(milliseconds: 500),
-      height: 50,
+      height: 60,
       onTap: (index) {
         setState(() {
           widget.pageController.jumpToPage(index);

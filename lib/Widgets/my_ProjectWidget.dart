@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:strick_app/Shared/allTheLists.dart';
 
 class MyProjectWidget extends StatelessWidget {
   final String title;
   final String object;
+  final int projectIndex;
 
   const MyProjectWidget({
     super.key,
     required this.title,
     required this.object,
+    required this.projectIndex,
   });
 
   @override
@@ -18,7 +21,6 @@ class MyProjectWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           child: Container(
-            width: 200,
             decoration: BoxDecoration(
               // TODO: make a backImages for the projects
               color: Theme.of(context).colorScheme.secondary,
@@ -38,7 +40,6 @@ class MyProjectWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //! for this to work after you finish the tasks do this
                   //! donetask * 100 / number of tasks / 100 = 0.?
                   Padding(
                     padding: const EdgeInsets.only(top: 20, left: 5),
@@ -47,8 +48,15 @@ class MyProjectWidget extends StatelessWidget {
                       child: CircularPercentIndicator(
                         radius: 50,
                         lineWidth: 8,
-                        percent: 0.6,
-                        center: Text("60%"),
+                        percent: projectsList[projectIndex].inerTasks.isEmpty
+                            ? 0.0
+                            : percent(),
+                        center: Text(
+                          "${percent() * 100} %",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         progressColor: Colors.blueAccent,
                       ),
                     ),
@@ -61,7 +69,7 @@ class MyProjectWidget extends StatelessWidget {
                         width: 120,
                         child: Text(
                           overflow: TextOverflow.clip,
-                          title,
+                          title.capitalize(),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.surface,
                             fontSize: 18,
@@ -111,5 +119,21 @@ class MyProjectWidget extends StatelessWidget {
         )
       ],
     );
+  }
+
+  double percent() {
+    return ((projectsList[projectIndex]
+                    .inerTasks
+                    .where((task) => task.isDone)
+                    .length *
+                100) /
+            projectsList[projectIndex].inerTasks.length) /
+        100;
+  }
+}
+
+extension MyExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
   }
 }

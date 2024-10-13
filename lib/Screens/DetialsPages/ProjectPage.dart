@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:strick_app/Screens/DetialsPages/addTaskPage.dart';
+import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
+import 'package:strick_app/Widgets/myBDSheet.dart';
 import 'package:strick_app/Widgets/my_TimeLine.dart';
 
 class ProjectPage extends StatefulWidget {
   final int indexProject;
-  const ProjectPage({super.key, required this.indexProject});
+  final VoidCallback refrech;
+  const ProjectPage({
+    super.key,
+    required this.indexProject,
+    required this.refrech,
+  });
 
   @override
   State<ProjectPage> createState() => _ProjectPageState();
 }
 
 class _ProjectPageState extends State<ProjectPage> {
+  TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +57,10 @@ class _ProjectPageState extends State<ProjectPage> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddTaskPage(),
+                      builder: (context) => AddTaskPage(
+                        projectIndex: widget.indexProject,
+                        refrech: () => setState(() {}),
+                      ),
                     ),
                   ),
                   icon: Container(
@@ -81,7 +92,7 @@ class _ProjectPageState extends State<ProjectPage> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             width: MediaQuery.sizeOf(context).width,
-            height: 120,
+            height: 140,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Theme.of(context).colorScheme.surface,
@@ -92,43 +103,62 @@ class _ProjectPageState extends State<ProjectPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "[ ",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "[ ",
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: "Object:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
+                            TextSpan(
+                              text: "Object:",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: " ]",
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
+                            TextSpan(
+                              text: " ]",
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        onPressed: () {
+                          textEditingController.text =
+                              projectsList[widget.indexProject].object;
+                          myBDSheet(
+                            textEditingController: textEditingController,
+                            context: context,
+                            index: widget.indexProject,
+                            refrech: () {
+                              widget.refrech();
+                              setState(() {});
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.import_contacts),
+                      ),
+                    ],
                   ),
                   Text(
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.left,
-                    projectsList[widget.indexProject].object,
+                    projectsList[widget.indexProject].object.capitalize(),
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.surface,
                         fontWeight: FontWeight.w500,
@@ -156,24 +186,44 @@ class _ProjectPageState extends State<ProjectPage> {
             ],
           ),
           SizedBox(
-            height: MediaQuery.sizeOf(context).height / 1.55,
+            height: MediaQuery.sizeOf(context).height / 1.70,
             child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: projectsList[widget.indexProject].inerTasks.length,
-              itemBuilder: (context, index) => MyTimeline(
-                title: projectsList[widget.indexProject].inerTasks[index].title,
-                description: projectsList[widget.indexProject]
-                    .inerTasks[index]
-                    .description,
-                isFirst:
-                    projectsList[widget.indexProject].inerTasks[index].isFirst,
-                isLast:
-                    projectsList[widget.indexProject].inerTasks[index].isLast,
-              ),
-            ),
+                shrinkWrap: true,
+                itemCount: projectsList[widget.indexProject].inerTasks.length,
+                itemBuilder: (context, index) {
+                  isIndex(index: index);
+                  return MyTimeline(
+                    refrech: () {
+                      setState(() {});
+                      widget.refrech();
+                    },
+                    projectIndex: widget.indexProject,
+                    taskIndex: index,
+                    title: projectsList[widget.indexProject]
+                        .inerTasks[index]
+                        .title,
+                    description: projectsList[widget.indexProject]
+                        .inerTasks[index]
+                        .description,
+                    isFirst: projectsList[widget.indexProject]
+                        .inerTasks[index]
+                        .isFirst,
+                    isLast: index ==
+                            projectsList[widget.indexProject].inerTasks.length -
+                                1
+                        ? true
+                        : false,
+                  );
+                }),
           )
         ],
       ),
     );
+  }
+}
+
+extension MyExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
   }
 }

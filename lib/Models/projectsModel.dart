@@ -6,7 +6,7 @@ import 'package:strick_app/Models/projectTasks.dart';
 class Projects {
   String title;
   String object;
-  List<ProjectTasks> inerTasks;
+  List<dynamic> inerTasks;
 
   Projects({
     required this.title,

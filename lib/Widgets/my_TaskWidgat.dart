@@ -21,13 +21,20 @@ class MyTaskWidget extends StatefulWidget {
 }
 
 class _MyTaskWidgetState extends State<MyTaskWidget> {
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: () => myBSheetEdit(
+      onLongPress: () {
+        textEditingController.text = simpleTasksList[widget.simpleindex].title;
+        myBSheetEdit(
           context: context,
           simpleindex: widget.simpleindex,
-          refrech: widget.refrech),
+          refrech: widget.refrech,
+          textEditingController: textEditingController,
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         width: MediaQuery.sizeOf(context).width,
@@ -81,7 +88,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                       width: 250,
                       child: Text(
                         overflow: TextOverflow.clip,
-                        widget.title,
+                        "${widget.simpleindex + 1}. ${widget.title.capitalize()}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -114,5 +121,11 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
         ),
       ),
     );
+  }
+}
+
+extension MyExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
   }
 }

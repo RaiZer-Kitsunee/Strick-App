@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Keys/storage_keys.dart';
+import 'package:strick_app/Models/projectsModel.dart';
 import 'package:strick_app/Models/simpleTaskModel.dart';
 import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
@@ -40,14 +41,19 @@ class _HomePageState extends State<HomePage> {
     //* For simple tasks
     String? loadedStringList = pref.getString(simpleTaskKey);
     String? loadedStringDoneList = pref.getString(doneSimpleTaskKey);
+    String? loadedStringProjectList = pref.getString(projectKey);
 
     List<dynamic> loadedJsonList = jsonDecode(loadedStringList!);
     List<dynamic> loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
+    List<dynamic> loadedJsonProjectList = jsonDecode(loadedStringProjectList!);
 
     simpleTasksList =
         loadedJsonList.map((element) => SimpleTask.fromJson(element)).toList();
     doneSimpleTaskList = loadedJsonDoneList
         .map((element) => SimpleTask.fromJson(element))
+        .toList();
+    projectsList = loadedJsonProjectList
+        .map((element) => Projects.fromJson(element))
         .toList();
     setState(() {});
   }
@@ -158,7 +164,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 10),
           SizedBox(
             width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).height / 1.50,
+            height: MediaQuery.sizeOf(context).height / 1.56,
             child: ListView(
               children: [
                 isOnlyTask
@@ -207,7 +213,6 @@ class _HomePageState extends State<HomePage> {
                 simpleTasksList.isEmpty
                     ? IfThereISNothing()
                     : ListView.builder(
-                        reverse: true,
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: simpleTasksList.length,
@@ -224,87 +229,65 @@ class _HomePageState extends State<HomePage> {
                           );
                         },
                       ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(500),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "Complete Task",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(500),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 doneSimpleTaskList.isEmpty
-                    ? IfThereISNothing2()
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: doneSimpleTaskList.length,
-                        itemBuilder: (context, index) {
-                          return MyDoneDismissible(
-                            context: context,
-                            index: index,
-                            child: MyDoneTaskWidget(
-                                title: doneSimpleTaskList[index].title,
-                                simpleindex: index,
-                                refrech: () => setState(() {})),
-                            refrech: () => setState(() {}),
-                          );
-                        },
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(500),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Complete Task",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(500),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: doneSimpleTaskList.length,
+                  itemBuilder: (context, index) {
+                    return MyDoneDismissible(
+                      context: context,
+                      index: index,
+                      child: MyDoneTaskWidget(
+                          title: doneSimpleTaskList[index].title,
+                          simpleindex: index,
+                          refrech: () => setState(() {})),
+                      refrech: () => setState(() {}),
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class IfThereISNothing2 extends StatelessWidget {
-  const IfThereISNothing2({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.only(top: 15),
-        child: Column(
-          children: [
-            Text(
-              "No completed tasks yet",
-              style: TextStyle(
-                fontSize: 20,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -326,16 +309,15 @@ class IfThereISNothing extends StatelessWidget {
             Text(
               "Let Start With Simple Task",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             SizedBox(height: 15),
             Icon(
               Icons.note_add_rounded,
               size: 70,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary,
             )
           ],
         ),

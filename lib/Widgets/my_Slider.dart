@@ -26,16 +26,15 @@ class MySlider extends StatelessWidget {
                     Text(
                       "If you find any project let me khow",
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
                         fontSize: 20,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 15),
                     Icon(
                       Icons.folder_off_rounded,
                       size: 70,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                     )
                   ],
                 ),
@@ -50,6 +49,7 @@ class MySlider extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProjectPage(
+                          refrech: () => onRefrech(),
                           indexProject: index,
                         ),
                       ),
@@ -63,6 +63,7 @@ class MySlider extends StatelessWidget {
                     child: MyProjectWidget(
                       title: projectsList[index].title,
                       object: projectsList[index].object,
+                      projectIndex: index,
                     ),
                   );
                 },

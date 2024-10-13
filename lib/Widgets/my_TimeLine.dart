@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class MyTimeline extends StatelessWidget {
@@ -6,13 +7,20 @@ class MyTimeline extends StatelessWidget {
   final bool isLast;
   final String title;
   final String description;
+  final int projectIndex;
+  final int taskIndex;
+  final VoidCallback refrech;
 
-  const MyTimeline(
-      {super.key,
-      required this.isFirst,
-      required this.isLast,
-      required this.title,
-      required this.description});
+  const MyTimeline({
+    super.key,
+    required this.isFirst,
+    required this.isLast,
+    required this.title,
+    required this.description,
+    required this.projectIndex,
+    required this.taskIndex,
+    required this.refrech,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,29 +103,40 @@ class MyTimeline extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            "9:00",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.surface,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          child: SizedBox(
+                            width: 45,
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              projectsList[projectIndex]
+                                  .inerTasks[taskIndex]
+                                  .start,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.surface,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 15),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            width: 30,
-                            height: 30,
-                            child: Icon(
-                              Icons.done,
-                              color: Theme.of(context).colorScheme.secondary,
-                              size: 25,
+                          child: Transform.scale(
+                            scale: 1.4,
+                            child: Checkbox(
+                              activeColor: Colors.blueAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              value: projectsList[projectIndex]
+                                  .inerTasks[taskIndex]
+                                  .isDone,
+                              onChanged: (value) {
+                                projectsList[projectIndex]
+                                    .inerTasks[taskIndex]
+                                    .isDone = value!;
+                                refrech();
+                              },
                             ),
                           ),
                         )
