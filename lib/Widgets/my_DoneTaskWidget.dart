@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, avoid_print, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:strick_app/Services/simpleTasksService.dart';
+import 'package:strick_app/Services/dailyTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
 class MyDoneTaskWidget extends StatefulWidget {
@@ -62,14 +62,14 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      value: doneSimpleTaskList[widget.simpleindex].isDone,
+                      value: doneDailyTaskList[widget.simpleindex].isDone,
                       onChanged: (value) {
-                        doneSimpleTaskList[widget.simpleindex].isDone = value!;
+                        doneDailyTaskList[widget.simpleindex].isDone = value!;
 
                         setState(() {
-                          simpleTasksList
-                              .add(doneSimpleTaskList[widget.simpleindex]);
-                          doneSimpleTaskList.removeAt(widget.simpleindex);
+                          dailyTasksList
+                              .add(doneDailyTaskList[widget.simpleindex]);
+                          doneDailyTaskList.removeAt(widget.simpleindex);
                         });
                         widget.refrech();
                         saveIntoSp();
@@ -89,10 +89,9 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
                             .colorScheme
                             .secondary
                             .withOpacity(0.8),
-                        decoration:
-                            doneSimpleTaskList[widget.simpleindex].isDone
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
+                        decoration: doneDailyTaskList[widget.simpleindex].isDone
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
                         decorationThickness: 2.5,
                         decorationColor:
                             Theme.of(context).colorScheme.secondary,
@@ -102,7 +101,7 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(right: 20),
+                margin: EdgeInsets.only(right: 12),
                 height: 10,
                 width: 10,
                 decoration: BoxDecoration(

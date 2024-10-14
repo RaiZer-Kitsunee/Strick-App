@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, avoid_print, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:strick_app/Services/simpleTasksService.dart';
+import 'package:strick_app/Services/dailyTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheetEdit.dart';
 
@@ -22,18 +22,25 @@ class MyTaskWidget extends StatefulWidget {
 
 class _MyTaskWidgetState extends State<MyTaskWidget> {
   TextEditingController textEditingController = TextEditingController();
+  TextEditingController descrptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onLongPress: () {
-        textEditingController.text = simpleTasksList[widget.simpleindex].title;
+        textEditingController.text = dailyTasksList[widget.simpleindex].title;
+        descrptionController.text =
+            dailyTasksList[widget.simpleindex].descrption;
         myBSheetEdit(
           context: context,
           simpleindex: widget.simpleindex,
           refrech: widget.refrech,
           textEditingController: textEditingController,
+          descrptionController: descrptionController,
         );
+      },
+      onDoubleTap: () {
+        myDialog(context);
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
@@ -69,14 +76,14 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        value: simpleTasksList[widget.simpleindex].isDone,
+                        value: dailyTasksList[widget.simpleindex].isDone,
                         onChanged: (value) {
-                          simpleTasksList[widget.simpleindex].isDone = value!;
+                          dailyTasksList[widget.simpleindex].isDone = value!;
 
                           setState(() {
-                            doneSimpleTaskList
-                                .add(simpleTasksList[widget.simpleindex]);
-                            simpleTasksList.removeAt(widget.simpleindex);
+                            doneDailyTaskList
+                                .add(dailyTasksList[widget.simpleindex]);
+                            dailyTasksList.removeAt(widget.simpleindex);
                           });
                           widget.refrech();
                           saveIntoSp();
@@ -93,7 +100,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                           color: Theme.of(context).colorScheme.secondary,
-                          decoration: simpleTasksList[widget.simpleindex].isDone
+                          decoration: dailyTasksList[widget.simpleindex].isDone
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                           decorationThickness: 2.5,
@@ -105,7 +112,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 20),
+                  margin: EdgeInsets.only(right: 12),
                   height: 10,
                   width: 10,
                   decoration: BoxDecoration(
@@ -117,6 +124,28 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> myDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Descrption :",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+        content: Text(
+          dailyTasksList[widget.simpleindex].descrption,
+          style: TextStyle(
+            overflow: TextOverflow.clip,
+            color: Theme.of(context).colorScheme.secondary,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

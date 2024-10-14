@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SchedulePage extends StatefulWidget {
-  const SchedulePage({super.key});
+class NotePage extends StatefulWidget {
+  const NotePage({super.key});
 
   @override
-  State<SchedulePage> createState() => _SchedulePageState();
+  State<NotePage> createState() => _NotePageState();
 }
 
-class _SchedulePageState extends State<SchedulePage> {
+class _NotePageState extends State<NotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Text(
-          "Schedule Page",
+          "Notes Page",
           style: TextStyle(
             color: Theme.of(context).colorScheme.secondary,
           ),

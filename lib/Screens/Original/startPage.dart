@@ -4,7 +4,7 @@ import 'package:strick_app/Screens/DetialsPages/profilePage.dart';
 import 'package:strick_app/Screens/DetialsPages/settingPage.dart';
 
 import 'package:strick_app/Widgets/my_CNB.dart';
-import '../DetialsPages/schedulePage.dart';
+import '../DetialsPages/notePage.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -23,7 +23,7 @@ class _StartPageState extends State<StartPage> {
   //* List of Pages
   List<Widget> pages = [
     const HomePage(),
-    const SchedulePage(),
+    const NotePage(),
     const SettingPage(),
     const ProfilePage(),
   ];

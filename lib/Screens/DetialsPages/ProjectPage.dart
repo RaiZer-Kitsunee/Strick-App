@@ -3,6 +3,7 @@ import 'package:strick_app/Screens/DetialsPages/addTaskPage.dart';
 import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/myBDSheet.dart';
+import 'package:strick_app/Widgets/my_PBSheet.dart';
 import 'package:strick_app/Widgets/my_TimeLine.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ProjectPageState extends State<ProjectPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
-                  projectsList[widget.indexProject].title,
+                  projectsList[widget.indexProject].title.capitalize(),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.surface,
                     fontSize: 25,
@@ -54,15 +55,13 @@ class _ProjectPageState extends State<ProjectPage> {
               Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: IconButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddTaskPage(
-                        projectIndex: widget.indexProject,
-                        refrech: () => setState(() {}),
-                      ),
-                    ),
-                  ),
+                  onPressed: () {
+                    myPBSheet(
+                      context: context,
+                      refrech: () => setState(() {}),
+                      projectIndex: widget.indexProject,
+                    );
+                  },
                   icon: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -181,7 +180,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 margin: const EdgeInsets.only(left: 5, top: 15),
                 color: Theme.of(context).colorScheme.primary,
                 height: 2,
-                width: 170,
+                width: 155,
               )
             ],
           ),
@@ -202,9 +201,6 @@ class _ProjectPageState extends State<ProjectPage> {
                     title: projectsList[widget.indexProject]
                         .inerTasks[index]
                         .title,
-                    description: projectsList[widget.indexProject]
-                        .inerTasks[index]
-                        .description,
                     isFirst: projectsList[widget.indexProject]
                         .inerTasks[index]
                         .isFirst,

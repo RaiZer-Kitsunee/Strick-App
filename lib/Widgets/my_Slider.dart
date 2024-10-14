@@ -14,7 +14,7 @@ class MySlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 270,
+      height: 245,
       width: MediaQuery.sizeOf(context).width,
       child: projectsList.isEmpty
           ? Align(

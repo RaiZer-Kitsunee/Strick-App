@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Keys/storage_keys.dart';
 import 'package:strick_app/Models/projectsModel.dart';
-import 'package:strick_app/Models/simpleTaskModel.dart';
+import 'package:strick_app/Models/dailyTaskModel.dart';
 import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheet.dart';
@@ -39,18 +39,18 @@ class _HomePageState extends State<HomePage> {
 
   readFromSp() {
     //* For simple tasks
-    String? loadedStringList = pref.getString(simpleTaskKey);
-    String? loadedStringDoneList = pref.getString(doneSimpleTaskKey);
+    String? loadedStringList = pref.getString(DailyTaskKey);
+    String? loadedStringDoneList = pref.getString(doneDailyTaskKey);
     String? loadedStringProjectList = pref.getString(projectKey);
 
     List<dynamic> loadedJsonList = jsonDecode(loadedStringList!);
     List<dynamic> loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
     List<dynamic> loadedJsonProjectList = jsonDecode(loadedStringProjectList!);
 
-    simpleTasksList =
-        loadedJsonList.map((element) => SimpleTask.fromJson(element)).toList();
-    doneSimpleTaskList = loadedJsonDoneList
-        .map((element) => SimpleTask.fromJson(element))
+    dailyTasksList =
+        loadedJsonList.map((element) => DailyTask.fromJson(element)).toList();
+    doneDailyTaskList = loadedJsonDoneList
+        .map((element) => DailyTask.fromJson(element))
         .toList();
     projectsList = loadedJsonProjectList
         .map((element) => Projects.fromJson(element))
@@ -68,8 +68,137 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Column(
+      body: Stack(
         children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height / 1.50,
+              child: ListView(
+                children: [
+                  isOnlyTask
+                      ? SizedBox(height: 0)
+                      : Column(
+                          children: [
+                            MyTitles(
+                              title1: "Projects",
+                              title2: "Add Project",
+                              selected: selected,
+                              textEditingController: projectsController,
+                              onPressedBack: () {
+                                setState(() {
+                                  selected = !selected;
+                                  projectsController.clear();
+                                });
+                              },
+                              onPressedAdd: () {
+                                addProject(
+                                    title: projectsController.text,
+                                    object: "in till i do object");
+                                setState(() {
+                                  projectsController.clear();
+                                  selected = !selected;
+                                });
+                              },
+                              onTap: () {
+                                setState(() {
+                                  selected = !selected;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            MySlider(onRefrech: () => setState(() {})),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                  MyTitles(
+                    title1: "Daily Tasks",
+                    title2: "Add Task",
+                    selected: false,
+                    textEditingController: projectsController,
+                    onTap: () => myBSheet(context, () => setState(() {})),
+                  ),
+                  const SizedBox(height: 10),
+                  dailyTasksList.isEmpty
+                      ? IfThereISNothing()
+                      : ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: dailyTasksList.length,
+                          itemBuilder: (context, index) {
+                            return MyDismissible(
+                              context: context,
+                              index: index,
+                              child: MyTaskWidget(
+                                title: dailyTasksList[index].title,
+                                simpleindex: index,
+                                refrech: () => setState(() {}),
+                              ),
+                              refrech: () => setState(() {}),
+                            );
+                          },
+                        ),
+                  doneDailyTaskList.isEmpty
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  height: 3,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(500),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "Complete Task",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  height: 3,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(500),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: doneDailyTaskList.length,
+                    itemBuilder: (context, index) {
+                      return MyDoneDismissible(
+                        context: context,
+                        index: index,
+                        child: MyDoneTaskWidget(
+                            title: doneDailyTaskList[index].title,
+                            simpleindex: index,
+                            refrech: () => setState(() {})),
+                        refrech: () => setState(() {}),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -118,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                     Stack(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 25.0),
+                          padding: const EdgeInsets.only(right: 20.0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Container(
@@ -160,132 +289,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               )
             ],
-          ),
-          SizedBox(height: 10),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).height / 1.56,
-            child: ListView(
-              children: [
-                isOnlyTask
-                    ? Container()
-                    : Column(
-                        children: [
-                          MyTitles(
-                            title1: "Projects",
-                            title2: "Add Project",
-                            selected: selected,
-                            textEditingController: projectsController,
-                            onPressedBack: () {
-                              setState(() {
-                                selected = !selected;
-                                projectsController.clear();
-                              });
-                            },
-                            onPressedAdd: () {
-                              addProject(
-                                  title: projectsController.text,
-                                  object: "in till i do object");
-                              setState(() {
-                                projectsController.clear();
-                                selected = !selected;
-                              });
-                            },
-                            onTap: () {
-                              setState(() {
-                                selected = !selected;
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          MySlider(onRefrech: () => setState(() {})),
-                          const SizedBox(height: 10),
-                        ],
-                      ),
-                MyTitles(
-                  title1: "Daily Tasks",
-                  title2: "Add Task",
-                  selected: false,
-                  textEditingController: projectsController,
-                  onTap: () => myBSheet(context, () => setState(() {})),
-                ),
-                const SizedBox(height: 10),
-                simpleTasksList.isEmpty
-                    ? IfThereISNothing()
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: simpleTasksList.length,
-                        itemBuilder: (context, index) {
-                          return MyDismissible(
-                            context: context,
-                            index: index,
-                            child: MyTaskWidget(
-                              title: simpleTasksList[index].title,
-                              simpleindex: index,
-                              refrech: () => setState(() {}),
-                            ),
-                            refrech: () => setState(() {}),
-                          );
-                        },
-                      ),
-                doneSimpleTaskList.isEmpty
-                    ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                height: 3,
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(500),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Complete Task",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                height: 3,
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(500),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: doneSimpleTaskList.length,
-                  itemBuilder: (context, index) {
-                    return MyDoneDismissible(
-                      context: context,
-                      index: index,
-                      child: MyDoneTaskWidget(
-                          title: doneSimpleTaskList[index].title,
-                          simpleindex: index,
-                          refrech: () => setState(() {})),
-                      refrech: () => setState(() {}),
-                    );
-                  },
-                ),
-              ],
-            ),
           ),
         ],
       ),

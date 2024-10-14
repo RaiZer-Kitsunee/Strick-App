@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:strick_app/Services/simpleTasksService.dart';
+import 'package:strick_app/Services/dailyTasksService.dart';
 
 void myBSheet(BuildContext context, VoidCallback refrech) {
   TextEditingController textEditingController = TextEditingController();
+  TextEditingController descrptionController = TextEditingController();
 
   showModalBottomSheet(
     isScrollControlled: true,
@@ -14,7 +15,7 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 200,
+          height: 340,
           child: Column(
             children: [
               Padding(
@@ -31,7 +32,6 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 12),
                 child: TextField(
-                  autofocus: true,
                   autocorrect: true,
                   controller: textEditingController,
                   decoration: InputDecoration(
@@ -51,6 +51,41 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  "Creating Description : ",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.surface,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 12),
+                child: TextField(
+                  autocorrect: true,
+                  controller: descrptionController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.edit_square),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.secondary,
+                    hintText: "By Doing Something",
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.secondary,
+                          width: 0.2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: Row(
@@ -75,7 +110,9 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
                       child: TextButton(
                         onPressed: () {
                           if (textEditingController.text.isNotEmpty) {
-                            addSimpleTasks(name: textEditingController.text);
+                            addDailyTasks(
+                                name: textEditingController.text,
+                                descrption: descrptionController.text);
                             refrech();
                             textEditingController.clear();
                             Navigator.pop(context);
@@ -93,7 +130,7 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

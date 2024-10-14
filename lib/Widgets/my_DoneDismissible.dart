@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:strick_app/Models/simpleTaskModel.dart';
-import 'package:strick_app/Services/simpleTasksService.dart';
+import 'package:strick_app/Models/dailyTaskModel.dart';
+import 'package:strick_app/Services/dailyTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_AlertDialog.dart';
 
@@ -15,7 +15,7 @@ Dismissible MyDoneDismissible(
             context: context, builder: (context) => MyAlertDialog());
       },
       onDismissed: (direction) {
-        deleteDoneSimpleTasks(index: index);
+        deleteDoneDailyTasks(index: index);
         refrech();
       },
       background: Container(
@@ -28,6 +28,6 @@ Dismissible MyDoneDismissible(
           color: Colors.white,
         ),
       ),
-      key: ValueKey<SimpleTask>(doneSimpleTaskList[index]),
+      key: ValueKey<DailyTask>(doneDailyTaskList[index]),
       child: child);
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/projectService.dart';
 
-void myPBSheet(
-    {required BuildContext context,
-    required VoidCallback refrech,
-    required int projectIndex}) {
-  TextEditingController textEditingController = TextEditingController();
-
+void myPBSheetEdit({
+  required BuildContext context,
+  required VoidCallback refrech,
+  required int projectIndex,
+  required int taskIndex,
+  required TextEditingController textEditingController,
+}) {
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -23,7 +24,7 @@ void myPBSheet(
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Creating Task : ",
+                  "Edit Task Title: ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.surface,
                     fontSize: 18,
@@ -41,7 +42,7 @@ void myPBSheet(
                     prefixIcon: Icon(Icons.edit_square),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.secondary,
-                    hintText: "First Task...",
+                    hintText: "Edit...",
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -78,9 +79,11 @@ void myPBSheet(
                       child: TextButton(
                         onPressed: () {
                           if (textEditingController.text.isNotEmpty) {
-                            addProjectTask(
-                                projectIndex: projectIndex,
-                                title: textEditingController.text);
+                            updateProjectTask(
+                              projectIndex: projectIndex,
+                              taskIndex: taskIndex,
+                              newTitle: textEditingController.text,
+                            );
                             refrech();
                             textEditingController.clear();
                             Navigator.pop(context);

@@ -46,24 +46,40 @@ int isIndex({required int index}) {
 void addProjectTask({
   required int projectIndex,
   required String title,
-  required String description,
-  required String date,
-  required String start,
-  required String end,
+  // required String description,
+  // required String date,
+  // required String start,
+  // required String end,
 }) {
   projectsList[projectIndex].inerTasks.add(
         ProjectTasks(
           title: title,
-          description: description,
+          // description: description,
           isFirst: projectsList[projectIndex].inerTasks.isEmpty ? true : false,
           isLast: fkindex == projectsList[projectIndex].inerTasks.length - 1
               ? true
               : false,
           isDone: false,
-          date: date,
-          start: start,
-          end: end,
+          // date: date,
+          // start: start,
+          // end: end,
         ),
       );
+  saveIntoSp();
+}
+
+//* let delete some Project tasks
+void deleteProjectTask({required int projectIndex, required int taskIndex}) {
+  projectsList[projectIndex].inerTasks.removeAt(taskIndex);
+  saveIntoSp();
+}
+
+//* wana change that okey
+void updateProjectTask({
+  required int projectIndex,
+  required int taskIndex,
+  required String newTitle,
+}) {
+  projectsList[projectIndex].inerTasks[taskIndex].title = newTitle;
   saveIntoSp();
 }
