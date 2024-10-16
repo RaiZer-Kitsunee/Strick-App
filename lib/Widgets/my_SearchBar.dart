@@ -55,23 +55,7 @@ class MySearchBar extends StatelessWidget {
               ),
             ),
           ),
-          trailing: InkWell(
-            onTap: onTap,
-            child: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Icon(
-                Icons.dns_rounded,
-                color: Theme.of(context).colorScheme.surface,
-              ),
-            ),
-          ),
+          // trailing:
         ),
       ),
     );

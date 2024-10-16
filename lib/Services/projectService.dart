@@ -48,14 +48,15 @@ void addProjectTask({
   required String title,
   // required String description,
   // required String date,
-  // required String start,
-  // required String end,
+  required String start,
+  required String end,
 }) {
   projectsList[projectIndex].inerTasks.add(
         ProjectTasks(
           title: title,
-          // description: description,
-          isFirst: projectsList[projectIndex].inerTasks.isEmpty ? true : false,
+          start: start,
+          end: end,
+          isFirst: fkindex == 0 ? true : false,
           isLast: fkindex == projectsList[projectIndex].inerTasks.length - 1
               ? true
               : false,

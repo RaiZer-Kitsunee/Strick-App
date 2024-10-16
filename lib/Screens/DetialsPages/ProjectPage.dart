@@ -184,35 +184,64 @@ class _ProjectPageState extends State<ProjectPage> {
               )
             ],
           ),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height / 1.70,
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: projectsList[widget.indexProject].inerTasks.length,
-                itemBuilder: (context, index) {
-                  isIndex(index: index);
-                  return MyTimeline(
-                    refrech: () {
-                      setState(() {});
-                      widget.refrech();
-                    },
-                    projectIndex: widget.indexProject,
-                    taskIndex: index,
-                    title: projectsList[widget.indexProject]
-                        .inerTasks[index]
-                        .title,
-                    isFirst: projectsList[widget.indexProject]
-                        .inerTasks[index]
-                        .isFirst,
-                    isLast: index ==
-                            projectsList[widget.indexProject].inerTasks.length -
-                                1
-                        ? true
-                        : false,
-                  );
-                }),
-          )
+          projectsList[widget.indexProject].inerTasks.isEmpty
+              ? IfThereIsNOProjectTasks(context)
+              : SizedBox(
+                  height: MediaQuery.sizeOf(context).height / 1.70,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount:
+                          projectsList[widget.indexProject].inerTasks.length,
+                      itemBuilder: (context, index) {
+                        isIndex(index: index);
+                        return MyTimeline(
+                          refrech: () {
+                            setState(() {});
+                            widget.refrech();
+                          },
+                          projectIndex: widget.indexProject,
+                          taskIndex: index,
+                          title: projectsList[widget.indexProject]
+                              .inerTasks[index]
+                              .title,
+                          isFirst: index == 0 ? true : false,
+                          isLast: index ==
+                                  projectsList[widget.indexProject]
+                                          .inerTasks
+                                          .length -
+                                      1
+                              ? true
+                              : false,
+                        );
+                      }),
+                )
         ],
+      ),
+    );
+  }
+
+  Align IfThereIsNOProjectTasks(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: EdgeInsets.only(top: 60),
+        child: Column(
+          children: [
+            Text(
+              "I Think This Is Empty !!!",
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: 15),
+            Icon(
+              Icons.screenshot_monitor_outlined,
+              size: 70,
+              color: Theme.of(context).colorScheme.primary,
+            )
+          ],
+        ),
       ),
     );
   }

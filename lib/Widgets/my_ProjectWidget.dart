@@ -30,7 +30,7 @@ class MyProjectWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).colorScheme.primary,
-                  blurRadius: 5,
+                  blurRadius: 1,
                 ),
               ],
             ),

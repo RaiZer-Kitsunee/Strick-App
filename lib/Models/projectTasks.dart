@@ -3,9 +3,8 @@
 class ProjectTasks {
   String title;
   // String date;
-  // String start;
-  // String end;
-  // String description;
+  String start;
+  String end;
   bool isFirst;
   bool isLast;
   bool isDone;
@@ -13,9 +12,8 @@ class ProjectTasks {
   ProjectTasks({
     required this.title,
     // required this.date,
-    // required this.start,
-    // required this.end,
-    // required this.description,
+    required this.start,
+    required this.end,
     required this.isFirst,
     required this.isLast,
     this.isDone = false,
@@ -25,9 +23,8 @@ class ProjectTasks {
     return <String, dynamic>{
       'title': title,
       // 'date': date,
-      // 'start': start,
-      // 'end': end,
-      // 'description': description,
+      'start': start,
+      'end': end,
       'isFirst': isFirst,
       'isLast': isLast,
       'isDone': isDone
@@ -38,9 +35,8 @@ class ProjectTasks {
     return ProjectTasks(
       title: json['title'] as String,
       // date: json['date'],
-      // start: json['start'],
-      // end: json['end'],
-      // description: json['description'] as String,
+      start: json['start'],
+      end: json['end'],
       isFirst: json['isFirst'],
       isLast: json['isLast'],
       isDone: json['isDone'],

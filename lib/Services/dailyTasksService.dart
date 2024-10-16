@@ -29,8 +29,13 @@ void addDailyTasks({required String name, required String descrption}) {
 }
 
 //* update Simple Tasks
-void updateDailyTasks({required String newTilte, required int index}) {
+void updateDailyTasks({
+  required String newTilte,
+  required String newDisciption,
+  required int index,
+}) {
   dailyTasksList[index].title = newTilte;
+  dailyTasksList[index].descrption = newDisciption;
   saveIntoSp();
 }
 

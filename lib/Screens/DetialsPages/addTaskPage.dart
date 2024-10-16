@@ -21,8 +21,7 @@
 //   TextEditingController titleController = TextEditingController();
 //   TextEditingController descriptionController = TextEditingController();
 //   TextEditingController dateController = TextEditingController();
-//   TextEditingController startTimeController = TextEditingController();
-//   TextEditingController endTimeController = TextEditingController();
+  
 
 //   @override
 //   void dispose() {
@@ -122,53 +121,7 @@
 //           ),
 //           Column(
 //             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   myTextField(
-//                     context: context,
-//                     label: Text(
-//                       "Start time",
-//                       style: TextStyle(
-//                           color: Theme.of(context).colorScheme.secondary),
-//                     ),
-//                     controller: startTimeController,
-//                     width: 150,
-//                     readOnly: true,
-//                     textColor: Theme.of(context).colorScheme.secondary,
-//                     numLines: 1,
-//                     suffix: IconButton(
-//                       onPressed: () =>
-//                           _showTimePicker(context, startTimeController),
-//                       icon: Icon(
-//                         Icons.timer,
-//                         color: Theme.of(context).colorScheme.secondary,
-//                       ),
-//                     ),
-//                   ),
-//                   myTextField(
-//                     context: context,
-//                     label: Text(
-//                       "End time",
-//                       style: TextStyle(
-//                           color: Theme.of(context).colorScheme.secondary),
-//                     ),
-//                     controller: endTimeController,
-//                     width: 150,
-//                     readOnly: true,
-//                     textColor: Theme.of(context).colorScheme.secondary,
-//                     numLines: 1,
-//                     suffix: IconButton(
-//                       onPressed: () =>
-//                           _showTimePicker(context, endTimeController),
-//                       icon: Icon(
-//                         Icons.timer,
-//                         color: Theme.of(context).colorScheme.secondary,
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
+             
 //               myTextField(
 //                 context: context,
 //                 label: Text(
@@ -193,46 +146,7 @@
 //     );
 //   }
 
-//   Padding myTextField({
-//     required BuildContext context,
-//     required Text label,
-//     required TextEditingController controller,
-//     required double width,
-//     required bool readOnly,
-//     required Color textColor,
-//     required int numLines,
-//     required Widget suffix,
-//   }) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-//       child: SizedBox(
-//         width: width,
-//         child: TextField(
-//           readOnly: readOnly,
-//           controller: controller,
-//           maxLines: numLines,
-//           decoration: InputDecoration(
-//             suffix: suffix,
-//             label: label,
-//             enabledBorder: UnderlineInputBorder(
-//               borderSide: BorderSide(
-//                   color:
-//                       Theme.of(context).colorScheme.primary.withOpacity(0.5)),
-//             ),
-//             focusedBorder: UnderlineInputBorder(
-//               borderSide: BorderSide(
-//                   color:
-//                       Theme.of(context).colorScheme.primary.withOpacity(0.5)),
-//             ),
-//           ),
-//           style: TextStyle(
-//             color: textColor,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
+  
 
 //   Future<void> _showDatePicker(BuildContext context) async {
 //     DateTime? selectedDate = await showDatePicker(
@@ -267,6 +181,7 @@
 //       setState(() {
 //         controller.text = selectedTime.format(context);
 //       });
+      
 //     }
 //   }
 

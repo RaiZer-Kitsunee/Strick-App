@@ -12,7 +12,6 @@ import 'package:strick_app/Widgets/my_BSheet.dart';
 import 'package:strick_app/Widgets/my_Dismissible.dart';
 import 'package:strick_app/Widgets/my_DoneDismissible.dart';
 import 'package:strick_app/Widgets/my_DoneTaskWidget.dart';
-import 'package:strick_app/Widgets/my_SearchBar.dart';
 import 'package:strick_app/Widgets/my_Slider.dart';
 import 'package:strick_app/Widgets/my_TaskWidgat.dart';
 import 'package:strick_app/Widgets/my_titles.dart';
@@ -68,150 +67,49 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height / 1.50,
-              child: ListView(
-                children: [
-                  isOnlyTask
-                      ? SizedBox(height: 0)
-                      : Column(
-                          children: [
-                            MyTitles(
-                              title1: "Projects",
-                              title2: "Add Project",
-                              selected: selected,
-                              textEditingController: projectsController,
-                              onPressedBack: () {
-                                setState(() {
-                                  selected = !selected;
-                                  projectsController.clear();
-                                });
-                              },
-                              onPressedAdd: () {
-                                addProject(
-                                    title: projectsController.text,
-                                    object: "in till i do object");
-                                setState(() {
-                                  projectsController.clear();
-                                  selected = !selected;
-                                });
-                              },
-                              onTap: () {
-                                setState(() {
-                                  selected = !selected;
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 10),
-                            MySlider(onRefrech: () => setState(() {})),
-                            const SizedBox(height: 10),
-                          ],
-                        ),
-                  MyTitles(
-                    title1: "Daily Tasks",
-                    title2: "Add Task",
-                    selected: false,
-                    textEditingController: projectsController,
-                    onTap: () => myBSheet(context, () => setState(() {})),
-                  ),
-                  const SizedBox(height: 10),
-                  dailyTasksList.isEmpty
-                      ? IfThereISNothing()
-                      : ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: dailyTasksList.length,
-                          itemBuilder: (context, index) {
-                            return MyDismissible(
-                              context: context,
-                              index: index,
-                              child: MyTaskWidget(
-                                title: dailyTasksList[index].title,
-                                simpleindex: index,
-                                refrech: () => setState(() {}),
-                              ),
-                              refrech: () => setState(() {}),
-                            );
-                          },
-                        ),
-                  doneDailyTaskList.isEmpty
-                      ? Container()
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  height: 3,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    borderRadius: BorderRadius.circular(500),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "Complete Task",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  height: 3,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    borderRadius: BorderRadius.circular(500),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: doneDailyTaskList.length,
-                    itemBuilder: (context, index) {
-                      return MyDoneDismissible(
-                        context: context,
-                        index: index,
-                        child: MyDoneTaskWidget(
-                            title: doneDailyTaskList[index].title,
-                            simpleindex: index,
-                            refrech: () => setState(() {})),
-                        refrech: () => setState(() {}),
-                      );
-                    },
-                  ),
-                ],
-              ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            leading: Icon(
+              Icons.search,
+              size: 25,
+              color: Theme.of(context).colorScheme.surface,
             ),
-          ),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 220,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      isOnlyTask = !isOnlyTask;
+                    });
+                  },
+                  child: SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: Icon(
+                      isOnlyTask ? Icons.folder : Icons.dns_rounded,
+                      size: 25,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
                   ),
                 ),
+              ),
+            ],
+            centerTitle: true,
+            expandedHeight: 150,
+            pinned: true,
+            title: Text("S T R I C K"),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35),
+              ),
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(top: 60),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -225,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                             "Hey RaiZer !",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.surface,
-                              fontSize: 15,
+                              fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -278,18 +176,141 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Positioned(
-                top: 170,
-                child: MySearchBar(
-                  onTap: () {
-                    setState(() {
-                      isOnlyTask = !isOnlyTask;
-                    });
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                isOnlyTask
+                    ? SizedBox()
+                    : Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Column(
+                          children: [
+                            MyTitles(
+                              title1: "Projects",
+                              title2: "Add Project",
+                              selected: selected,
+                              textEditingController: projectsController,
+                              onPressedBack: () {
+                                setState(() {
+                                  selected = !selected;
+                                  projectsController.clear();
+                                });
+                              },
+                              onPressedAdd: () {
+                                addProject(
+                                    title: projectsController.text,
+                                    object: "in till i do object");
+                                setState(() {
+                                  projectsController.clear();
+                                  selected = !selected;
+                                });
+                              },
+                              onTap: () {
+                                setState(() {
+                                  selected = !selected;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            MySlider(onRefrech: () => setState(() {})),
+                            const SizedBox(height: 15),
+                          ],
+                        ),
+                      ),
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                isOnlyTask ? SizedBox(height: 15) : SizedBox(),
+                MyTitles(
+                  title1: "Daily Tasks",
+                  title2: "Add Task",
+                  selected: false,
+                  textEditingController: projectsController,
+                  onTap: () => myBSheet(context, () => setState(() {})),
+                ),
+                dailyTasksList.isEmpty
+                    ? IfThereISNothing()
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: dailyTasksList.length,
+                        itemBuilder: (context, index) {
+                          return MyDismissible(
+                            context: context,
+                            index: index,
+                            child: MyTaskWidget(
+                              title: dailyTasksList[index].title,
+                              simpleindex: index,
+                              refrech: () => setState(() {}),
+                            ),
+                            refrech: () => setState(() {}),
+                          );
+                        },
+                      ),
+                doneDailyTaskList.isEmpty
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(500),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Complete Task",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(500),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  reverse: true,
+                  shrinkWrap: true,
+                  itemCount: doneDailyTaskList.length,
+                  itemBuilder: (context, index) {
+                    return MyDoneDismissible(
+                      context: context,
+                      index: index,
+                      child: MyDoneTaskWidget(
+                          title: doneDailyTaskList[index].title,
+                          simpleindex: index,
+                          refrech: () => setState(() {})),
+                      refrech: () => setState(() {}),
+                    );
                   },
                 ),
-              )
-            ],
-          ),
+              ],
+            ),
+          )
         ],
       ),
     );

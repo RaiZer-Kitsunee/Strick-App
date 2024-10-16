@@ -1,10 +1,9 @@
 // ignore_for_file: file_names
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:strick_app/Screens/DetialsPages/ProjectPage.dart';
-import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
+import 'package:strick_app/Widgets/my_DeleteBSheet.dart';
 import 'package:strick_app/Widgets/my_ProjectWidget.dart';
 
 class MySlider extends StatelessWidget {
@@ -17,29 +16,7 @@ class MySlider extends StatelessWidget {
       height: 245,
       width: MediaQuery.sizeOf(context).width,
       child: projectsList.isEmpty
-          ? Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.only(top: 60),
-                child: Column(
-                  children: [
-                    Text(
-                      "If you find any project let me khow",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Icon(
-                      Icons.folder_off_rounded,
-                      size: 70,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                  ],
-                ),
-              ),
-            )
+          ? ifThereIsNoProjects(context)
           : CarouselSlider(
               items: List.generate(
                 projectsList.length,
@@ -54,12 +31,10 @@ class MySlider extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onLongPress: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) =>
-                              _projectDeleteDialog(context, index));
-                    },
+                    onLongPress: () => myDeleteBSheet(
+                        context: context,
+                        projectIndex: index,
+                        refrech: onRefrech),
                     child: MyProjectWidget(
                       title: projectsList[index].title,
                       object: projectsList[index].object,
@@ -82,69 +57,29 @@ class MySlider extends StatelessWidget {
     );
   }
 
-  AlertDialog _projectDeleteDialog(BuildContext context, int index) {
-    return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      title: Text(
-        "Delete",
-        style: TextStyle(color: Theme.of(context).colorScheme.surface),
-      ),
-      content: Text(
-        "Are You Sure You Want To Delete That ?",
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.surface),
-      ),
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Align ifThereIsNoProjects(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: EdgeInsets.only(top: 60),
+        child: Column(
           children: [
-            dialogbutton(
-              context: context,
-              name: "Y E S",
-              padding: EdgeInsets.only(left: 30),
-              color: Theme.of(context).colorScheme.surface,
-              onTap: () {
-                deleteProject(index: index);
-                Navigator.pop(context);
-                onRefrech();
-              },
+            Text(
+              "If you find any project let me khow",
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-            dialogbutton(
-              context: context,
-              name: "N O",
-              padding: EdgeInsets.only(right: 30),
-              color: Theme.of(context).colorScheme.surface,
-              onTap: () => Navigator.pop(context),
-            ),
+            SizedBox(height: 15),
+            Icon(
+              Icons.folder_off_rounded,
+              size: 70,
+              color: Theme.of(context).colorScheme.primary,
+            )
           ],
-        )
-      ],
-    );
-  }
-}
-
-Padding dialogbutton(
-    {required BuildContext context,
-    required String name,
-    required EdgeInsetsGeometry padding,
-    required Color color,
-    required void Function()? onTap}) {
-  return Padding(
-    padding: padding,
-    child: InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: color),
-        child: Text(
-          name,
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.bold),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

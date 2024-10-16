@@ -115,6 +115,7 @@ void myBSheetEdit({
                           if (textEditingController.text.isNotEmpty) {
                             updateDailyTasks(
                                 newTilte: textEditingController.text,
+                                newDisciption: descrptionController.text,
                                 index: simpleindex);
                             refrech();
                             Navigator.pop(context);
