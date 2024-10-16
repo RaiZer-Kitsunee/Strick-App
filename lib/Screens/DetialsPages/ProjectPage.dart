@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:strick_app/Screens/DetialsPages/addTaskPage.dart';
 import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/myBDSheet.dart';
