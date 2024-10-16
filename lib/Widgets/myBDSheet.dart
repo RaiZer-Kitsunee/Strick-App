@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:strick_app/Services/projectService.dart';
 
 import 'package:strick_app/Shared/allTheLists.dart';
 
@@ -82,6 +83,7 @@ void myBDSheet({
                             projectsList[index].object =
                                 textEditingController.text;
                             refrech();
+                            saveIntoSp();
                             textEditingController.clear();
                             Navigator.pop(context);
                           } else {

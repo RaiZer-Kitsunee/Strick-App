@@ -1,5 +1,5 @@
 // this is the key that we use to save and load form to json
-const String DailyTaskKey = "simple";
+const String dailyTaskKey = "simple";
 
 const String doneDailyTaskKey = "Done";
 

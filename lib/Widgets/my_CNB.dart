@@ -28,7 +28,7 @@ class _MyCNBState extends State<MyCNB> {
       items: [
         Icon(Icons.home,
             size: 30, color: Theme.of(context).colorScheme.surface),
-        Icon(Icons.calendar_month,
+        Icon(Icons.notes,
             size: 30, color: Theme.of(context).colorScheme.surface),
         Icon(Icons.settings,
             size: 30, color: Theme.of(context).colorScheme.surface),

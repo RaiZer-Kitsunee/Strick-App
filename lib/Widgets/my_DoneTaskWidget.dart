@@ -32,6 +32,10 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
             borderRadius: BorderRadius.all(
               Radius.circular(15),
             ),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 1.5,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Theme.of(context).colorScheme.primary,
@@ -108,23 +112,23 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            margin: EdgeInsets.only(right: 12),
-            height: 65,
-            width: 120,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-                topLeft: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-              ),
-            ),
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.centerRight,
+        //   child: Container(
+        //     margin: EdgeInsets.only(right: 12),
+        //     height: 65,
+        //     width: 65,
+        //     decoration: BoxDecoration(
+        //       color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+        //       borderRadius: BorderRadius.only(
+        //         topRight: Radius.circular(15),
+        //         bottomRight: Radius.circular(15),
+        //         topLeft: Radius.circular(50),
+        //         bottomLeft: Radius.circular(50),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

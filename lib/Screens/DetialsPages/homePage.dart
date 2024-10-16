@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   readFromSp() {
     //* For simple tasks
-    String? loadedStringList = pref.getString(DailyTaskKey);
+    String? loadedStringList = pref.getString(dailyTaskKey);
     String? loadedStringDoneList = pref.getString(doneDailyTaskKey);
     String? loadedStringProjectList = pref.getString(projectKey);
 

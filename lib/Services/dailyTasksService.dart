@@ -19,7 +19,7 @@ Future<void> saveIntoSp() async {
 
   //save the data into the shared preferences
   await pref.setString(doneDailyTaskKey, jsonStringDone);
-  await pref.setString(DailyTaskKey, jsonString);
+  await pref.setString(dailyTaskKey, jsonString);
 }
 
 //* add Simple Tasks
