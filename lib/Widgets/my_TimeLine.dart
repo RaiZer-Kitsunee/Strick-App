@@ -10,7 +10,6 @@ class MyTimeline extends StatelessWidget {
   final bool isFirst;
   final bool isLast;
   final String title;
-
   final int projectIndex;
   final int taskIndex;
   final VoidCallback refrech;
@@ -29,7 +28,7 @@ class MyTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
     return SizedBox(
-      height: 120,
+      height: 80,
       width: MediaQuery.sizeOf(context).width,
       child: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -63,13 +62,6 @@ class MyTimeline extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                projectsList[projectIndex].inerTasks[taskIndex].start,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                ),
-              ),
               Dismissible(
                 confirmDismiss: (direction) {
                   return myAlertBSheet(context: context);
@@ -109,7 +101,7 @@ class MyTimeline extends StatelessWidget {
                     print("niceeeeeeeeeeeeeeeeeeee");
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 35),
+                    padding: const EdgeInsets.only(left: 15, right: 20),
                     child: Container(
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
@@ -167,13 +159,6 @@ class MyTimeline extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
-              Text(
-                projectsList[projectIndex].inerTasks[taskIndex].end,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
                 ),
               ),
             ],

@@ -3,6 +3,7 @@ import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/myBDSheet.dart';
 import 'package:strick_app/Widgets/my_PBSheet.dart';
+import 'package:strick_app/Widgets/my_PTBSheet.dart';
 import 'package:strick_app/Widgets/my_TimeLine.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -19,7 +20,9 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage> {
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController objectEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,27 +30,62 @@ class _ProjectPageState extends State<ProjectPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 5, top: 25),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                size: 25,
-              ),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  projectsList[widget.indexProject].title.capitalize(),
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.surface,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.only(left: 5, top: 40),
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 25,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 30, top: 50),
+                child: Row(
+                  children: [
+                    Icon(Icons.task_alt_rounded),
+                    SizedBox(width: 10),
+                    Text(
+                      "${projectsList[widget.indexProject].inerTasks.where((task) => task.isDone).length} / ${projectsList[widget.indexProject].inerTasks.length}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onDoubleTap: () {
+                  titleEditingController.text =
+                      projectsList[widget.indexProject].title;
+                  myPTBSheetEdit(
+                    context: context,
+                    projectIndex: widget.indexProject,
+                    textEditingController: titleEditingController,
+                    refrech: () => setState(() {
+                      widget.refrech();
+                    }),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    projectsList[widget.indexProject].title,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.surface,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -57,7 +95,9 @@ class _ProjectPageState extends State<ProjectPage> {
                   onPressed: () {
                     myPBSheet(
                       context: context,
-                      refrech: () => setState(() {}),
+                      refrech: () => setState(() {
+                        widget.refrech();
+                      }),
                       projectIndex: widget.indexProject,
                     );
                   },
@@ -137,10 +177,10 @@ class _ProjectPageState extends State<ProjectPage> {
                       ),
                       IconButton(
                         onPressed: () {
-                          textEditingController.text =
+                          objectEditingController.text =
                               projectsList[widget.indexProject].object;
                           myBDSheet(
-                            textEditingController: textEditingController,
+                            textEditingController: objectEditingController,
                             context: context,
                             index: widget.indexProject,
                             refrech: () {
@@ -156,7 +196,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   Text(
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.left,
-                    projectsList[widget.indexProject].object.capitalize(),
+                    projectsList[widget.indexProject].object,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.surface,
                         fontWeight: FontWeight.w500,
@@ -186,14 +226,18 @@ class _ProjectPageState extends State<ProjectPage> {
           projectsList[widget.indexProject].inerTasks.isEmpty
               ? IfThereIsNOProjectTasks(context)
               : SizedBox(
-                  height: MediaQuery.sizeOf(context).height / 1.70,
+                  height: MediaQuery.sizeOf(context).height / 1.80,
                   child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       itemCount:
                           projectsList[widget.indexProject].inerTasks.length,
                       itemBuilder: (context, index) {
                         isIndex(index: index);
                         return MyTimeline(
+                          key: ValueKey(
+                            projectsList[widget.indexProject].inerTasks[index],
+                          ),
                           refrech: () {
                             setState(() {});
                             widget.refrech();

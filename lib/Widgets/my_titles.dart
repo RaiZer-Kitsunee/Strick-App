@@ -53,9 +53,10 @@ class _MyTitlesState extends State<MyTitles> {
                   alignment: Alignment.center,
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 300),
-                    width: widget.selected ? 370 : 90,
+                    width: widget.selected ? 330 : 90,
                     height: widget.selected ? 60 : 30,
                     alignment: Alignment.center,
+                    margin: widget.selected ? EdgeInsets.only(left: 10) : null,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(15),

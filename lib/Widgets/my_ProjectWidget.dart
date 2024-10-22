@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
@@ -52,9 +53,12 @@ class MyProjectWidget extends StatelessWidget {
                             ? 0.0
                             : percent(),
                         center: Text(
-                          "${percent() * 100} %",
+                          projectsList[projectIndex].inerTasks.isEmpty
+                              ? "0 %"
+                              : "${(percent() * 100).round()} %",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
                         ),
                         progressColor: Colors.blueAccent,
@@ -69,7 +73,7 @@ class MyProjectWidget extends StatelessWidget {
                         width: 120,
                         child: Text(
                           overflow: TextOverflow.clip,
-                          title.capitalize(),
+                          title,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.surface,
                             fontSize: 18,

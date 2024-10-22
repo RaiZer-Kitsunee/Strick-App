@@ -28,7 +28,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: () {
+      onDoubleTap: () {
         textEditingController.text = dailyTasksList[widget.simpleindex].title;
         descrptionController.text =
             dailyTasksList[widget.simpleindex].descrption;
@@ -40,7 +40,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
           descrptionController: descrptionController,
         );
       },
-      onDoubleTap: () {
+      onTap: () {
         myDialog(context);
       },
       child: Stack(
@@ -102,7 +102,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                           width: 250,
                           child: Text(
                             overflow: TextOverflow.clip,
-                            "${widget.simpleindex + 1}. ${widget.title.capitalize()}",
+                            "${widget.simpleindex + 1}. ${widget.title}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,

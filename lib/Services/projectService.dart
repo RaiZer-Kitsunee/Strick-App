@@ -42,28 +42,25 @@ int isIndex({required int index}) {
   return fkindex = index;
 }
 
+//* what is i dont like the title
+void updateProjectTitle({required int projectIndex, required String newTitle}) {
+  projectsList[projectIndex].title = newTitle;
+  saveIntoSp();
+}
+
 //* this will add a task to the project
 void addProjectTask({
   required int projectIndex,
   required String title,
-  // required String description,
-  // required String date,
-  required String start,
-  required String end,
 }) {
   projectsList[projectIndex].inerTasks.add(
         ProjectTasks(
           title: title,
-          start: start,
-          end: end,
           isFirst: fkindex == 0 ? true : false,
           isLast: fkindex == projectsList[projectIndex].inerTasks.length - 1
               ? true
               : false,
           isDone: false,
-          // date: date,
-          // start: start,
-          // end: end,
         ),
       );
   saveIntoSp();

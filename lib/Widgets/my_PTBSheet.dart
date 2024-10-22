@@ -1,72 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/projectService.dart';
 
-void myPBSheet({
+void myPTBSheetEdit({
   required BuildContext context,
   required VoidCallback refrech,
   required int projectIndex,
+  required TextEditingController textEditingController,
 }) {
-  TextEditingController textEditingController = TextEditingController();
-
-  // Future<void> _showTimePicker(
-  //     BuildContext context, TextEditingController controller) async {
-  //   TimeOfDay? selectedTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //     initialEntryMode: TimePickerEntryMode.dial,
-  //     builder: (context, child) => Theme(
-  //       data: ThemeData().copyWith(
-  //           colorScheme: ColorScheme.dark(primary: Colors.blueAccent)),
-  //       child: child!,
-  //     ),
-  //   );
-  //   if (selectedTime != null) {
-  //     controller.text = selectedTime.format(context);
-  //     refrech();
-  //   }
-  // }
-
-  // Padding myTextField({
-  //   required BuildContext context,
-  //   required Text label,
-  //   required TextEditingController controller,
-  //   required double width,
-  //   required bool readOnly,
-  //   required Color textColor,
-  //   required int numLines,
-  //   required Widget suffix,
-  // }) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-  //     child: SizedBox(
-  //       width: width,
-  //       child: TextField(
-  //         readOnly: readOnly,
-  //         controller: controller,
-  //         maxLines: numLines,
-  //         decoration: InputDecoration(
-  //           suffix: suffix,
-  //           label: label,
-  //           enabledBorder: OutlineInputBorder(
-  //             borderSide:
-  //                 BorderSide(color: Theme.of(context).colorScheme.primary),
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //           focusedBorder: OutlineInputBorder(
-  //             borderSide:
-  //                 BorderSide(color: Theme.of(context).colorScheme.surface),
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //         ),
-  //         style: TextStyle(
-  //           color: textColor,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -83,7 +23,7 @@ void myPBSheet({
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Creating Task : ",
+                  "Edit Project Title: ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.surface,
                     fontSize: 18,
@@ -101,7 +41,7 @@ void myPBSheet({
                     prefixIcon: Icon(Icons.edit_square),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.secondary,
-                    hintText: "First Task...",
+                    hintText: "Edit...",
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -138,9 +78,9 @@ void myPBSheet({
                       child: TextButton(
                         onPressed: () {
                           if (textEditingController.text.isNotEmpty) {
-                            addProjectTask(
+                            updateProjectTitle(
                               projectIndex: projectIndex,
-                              title: textEditingController.text,
+                              newTitle: textEditingController.text,
                             );
                             refrech();
                             textEditingController.clear();
@@ -167,22 +107,3 @@ void myPBSheet({
     },
   );
 }
-
-//  Future<void> _showDatePicker(BuildContext context) async {
-//     DateTime? selectedDate = await showDatePicker(
-//       context: context,
-//       initialDate: DateTime.now(),
-//       firstDate: DateTime(2000),
-//       lastDate: DateTime(2025),
-//       builder: (context, child) => Theme(
-//         data: ThemeData().copyWith(
-//             colorScheme: ColorScheme.dark(primary: Colors.blueAccent)),
-//         child: child!,
-//       ),
-//     );
-//     if (selectedDate != null) {
-//       dateController.text = DateFormat.MMMMEEEEd().format(selectedDate);
-//     }
-//   }
-
-

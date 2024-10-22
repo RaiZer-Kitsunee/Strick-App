@@ -42,10 +42,7 @@ class _SettingPageState extends State<SettingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: 25,
-              top: 50,
-            ),
+            padding: const EdgeInsets.only(left: 25, top: 65),
             child: Text(
               'Settings',
               style: TextStyle(

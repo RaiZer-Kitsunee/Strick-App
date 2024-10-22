@@ -24,13 +24,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //! varebelis
   bool selected = false;
   bool isOnlyTask = false;
-
-  TextEditingController projectsController = TextEditingController();
-
   late SharedPreferences pref;
 
+  //! controllers
+  TextEditingController projectsController = TextEditingController();
+
+  //! functions
   getShearedPref() async {
     pref = await SharedPreferences.getInstance();
     readFromSp();
@@ -55,6 +57,14 @@ class _HomePageState extends State<HomePage> {
         .map((element) => Projects.fromJson(element))
         .toList();
     setState(() {});
+  }
+
+  void reorderMyDailyTasks(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex--;
+    }
+    final task = dailyTasksList.removeAt(oldIndex);
+    dailyTasksList.insert(newIndex, task);
   }
 
   @override
@@ -98,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
             centerTitle: true,
-            expandedHeight: 150,
+            expandedHeight: 160,
             pinned: true,
             title: Text("S T R I C K"),
             shape: RoundedRectangleBorder(
@@ -109,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
-                padding: const EdgeInsets.only(top: 60),
+                padding: const EdgeInsets.only(top: 85),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -235,10 +245,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 dailyTasksList.isEmpty
                     ? IfThereISNothing()
-                    : ListView.builder(
+                    : ReorderableListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        padding: EdgeInsets.only(top: 15),
                         itemCount: dailyTasksList.length,
+                        onReorder: (oldIndex, newIndex) =>
+                            reorderMyDailyTasks(oldIndex, newIndex),
                         itemBuilder: (context, index) {
                           return MyDismissible(
                             context: context,
@@ -294,6 +307,7 @@ class _HomePageState extends State<HomePage> {
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   reverse: true,
+                  padding: EdgeInsets.only(top: 10),
                   shrinkWrap: true,
                   itemCount: doneDailyTaskList.length,
                   itemBuilder: (context, index) {
