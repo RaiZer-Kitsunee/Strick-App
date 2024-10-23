@@ -110,7 +110,22 @@ class _HomePageState extends State<HomePage> {
             centerTitle: true,
             expandedHeight: 160,
             pinned: true,
-            title: Text("S T R I C K"),
+            title: InkWell(
+                onTap: () async {
+                  if (doneDailyTaskList.isEmpty) {
+                    print("nothing to do");
+                  } else {
+                    print("Object Complete");
+                  }
+                  setState(() {
+                    dailyTasksList.addAll(doneDailyTaskList);
+                    doneDailyTaskList.clear();
+                    for (var task in dailyTasksList) {
+                      task.isDone = false;
+                    }
+                  });
+                },
+                child: Text("S T R I C K")),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),

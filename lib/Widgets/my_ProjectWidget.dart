@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
