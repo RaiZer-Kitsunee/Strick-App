@@ -1,13 +1,17 @@
 // ignore_for_file: file_names
 import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Keys/storage_keys.dart';
 import 'package:strick_app/Models/projectsModel.dart';
 import 'package:strick_app/Models/dailyTaskModel.dart';
-import 'package:strick_app/Services/projectService.dart';
+import 'package:strick_app/Services/notification_service.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
+import 'package:strick_app/Services/dailyTasksService.dart';
+import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Widgets/my_BSheet.dart';
 import 'package:strick_app/Widgets/my_Dismissible.dart';
 import 'package:strick_app/Widgets/my_DoneDismissible.dart';
@@ -28,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   bool selected = false;
   bool isOnlyTask = false;
   late SharedPreferences pref;
+  Random random = Random();
 
   //! controllers
   TextEditingController projectsController = TextEditingController();
@@ -67,9 +72,19 @@ class _HomePageState extends State<HomePage> {
     dailyTasksList.insert(newIndex, task);
   }
 
+  void welcomeNotification() async {
+    await NotificationService.showNotification(
+      title: "Strick Time",
+      body: 'Hey Master ${myProfile.name} Welcome Back',
+      scheduled: true,
+      interval: Duration(seconds: 5),
+    );
+  }
+
   @override
   void initState() {
     getShearedPref();
+    welcomeNotification();
     super.initState();
   }
 
@@ -81,10 +96,13 @@ class _HomePageState extends State<HomePage> {
         slivers: [
           SliverAppBar(
             backgroundColor: Theme.of(context).colorScheme.secondary,
-            leading: Icon(
-              Icons.search,
-              size: 25,
-              color: Theme.of(context).colorScheme.surface,
+            leading: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.search,
+                size: 25,
+                color: Theme.of(context).colorScheme.surface,
+              ),
             ),
             actions: [
               Padding(
@@ -115,15 +133,16 @@ class _HomePageState extends State<HomePage> {
                   if (doneDailyTaskList.isEmpty) {
                     print("nothing to do");
                   } else {
+                    setState(() {
+                      dailyTasksList.addAll(doneDailyTaskList);
+                      doneDailyTaskList.clear();
+                      for (var task in dailyTasksList) {
+                        task.isDone = false;
+                      }
+                      saveTasksIntoSp();
+                    });
                     print("Object Complete");
                   }
-                  setState(() {
-                    dailyTasksList.addAll(doneDailyTaskList);
-                    doneDailyTaskList.clear();
-                    for (var task in dailyTasksList) {
-                      task.isDone = false;
-                    }
-                  });
                 },
                 child: Text("S T R I C K")),
             shape: RoundedRectangleBorder(
@@ -145,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Hey RaiZer !",
+                            "Hey ${myProfile.name} !",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.surface,
                               fontSize: 16,
@@ -171,12 +190,21 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 20.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              color: Theme.of(context).colorScheme.primary,
+                          child: InkWell(
+                            onTap: () async {
+                              await NotificationService.showNotification(
+                                title: "Wisdom of the day",
+                                body: animeQuotes[
+                                    random.nextInt(animeQuotes.length)],
+                              );
+                            },
+                            child: CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              backgroundImage: myProfile.image == "null"
+                                  ? AssetImage("assets/computer-icons-user.png")
+                                  : FileImage(File(myProfile.image)),
+                              radius: 30,
                             ),
                           ),
                         ),

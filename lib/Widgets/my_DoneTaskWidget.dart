@@ -78,7 +78,7 @@ class _MyDoneTaskWidgetState extends State<MyDoneTaskWidget> {
                               doneDailyTaskList.removeAt(widget.simpleindex);
                             });
                             widget.refrech();
-                            saveIntoSp();
+                            saveTasksIntoSp();
                           },
                         ),
                       ),

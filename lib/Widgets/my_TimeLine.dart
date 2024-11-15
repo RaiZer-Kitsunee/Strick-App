@@ -150,7 +150,7 @@ class MyTimeline extends StatelessWidget {
                                       .inerTasks[taskIndex]
                                       .isDone = value!;
                                   refrech();
-                                  saveIntoSp();
+                                  saveProjectIntoSp();
                                 },
                               ),
                             ),

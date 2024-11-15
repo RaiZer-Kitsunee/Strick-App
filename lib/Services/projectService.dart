@@ -5,7 +5,7 @@ import 'package:strick_app/Models/projectTasks.dart';
 import 'package:strick_app/Models/projectsModel.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
-Future<void> saveIntoSp() async {
+Future<void> saveProjectIntoSp() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   //convert the data to json
   List<Map<String, dynamic>> jsonStringList =
@@ -27,13 +27,13 @@ void addProject({required String title, required String object}) {
       inerTasks: [],
     ),
   );
-  saveIntoSp();
+  saveProjectIntoSp();
 }
 
 //* and this to delete Projects
 void deleteProject({required int index}) {
   projectsList.removeAt(index);
-  saveIntoSp();
+  saveProjectIntoSp();
 }
 
 int? fkindex;
@@ -45,7 +45,7 @@ int isIndex({required int index}) {
 //* what is i dont like the title
 void updateProjectTitle({required int projectIndex, required String newTitle}) {
   projectsList[projectIndex].title = newTitle;
-  saveIntoSp();
+  saveProjectIntoSp();
 }
 
 //* this will add a task to the project
@@ -63,13 +63,13 @@ void addProjectTask({
           isDone: false,
         ),
       );
-  saveIntoSp();
+  saveProjectIntoSp();
 }
 
 //* let delete some Project tasks
 void deleteProjectTask({required int projectIndex, required int taskIndex}) {
   projectsList[projectIndex].inerTasks.removeAt(taskIndex);
-  saveIntoSp();
+  saveProjectIntoSp();
 }
 
 //* wana change that okey
@@ -79,5 +79,5 @@ void updateProjectTask({
   required String newTitle,
 }) {
   projectsList[projectIndex].inerTasks[taskIndex].title = newTitle;
-  saveIntoSp();
+  saveProjectIntoSp();
 }

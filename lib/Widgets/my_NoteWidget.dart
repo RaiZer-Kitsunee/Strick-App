@@ -1,44 +1,115 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:strick_app/Screens/DetialsPages/notePages/editNote.dart';
+import 'package:strick_app/Shared/allTheLists.dart';
+import 'package:strick_app/Widgets/my_DeleteNoteSheet.dart';
 
 class MyNotewidget extends StatelessWidget {
-  const MyNotewidget({super.key});
+  final int index;
+  final VoidCallback onRefrech;
+  final TextEditingController titleController;
+  final TextEditingController noteController;
+  const MyNotewidget({
+    super.key,
+    required this.onRefrech,
+    required this.index,
+    required this.titleController,
+    required this.noteController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-          height: 150,
-          width: 170,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(15),
+    return InkWell(
+      onTap: () {
+        titleController.text = notesList[index].title;
+        noteController.text = notesList[index].note;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditNote(
+                onRefrech: onRefrech,
+                titleController: titleController,
+                noteController: noteController,
+                noteIndex: index),
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("title............"),
-                Text("description......................................"),
-              ],
-            ),
-          ),
+        );
+      },
+      onLongPress: () => myDeleteNoteSheet(
+        context: context,
+        noteIndex: index,
+        refrech: onRefrech,
+      ),
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: 5,
         ),
-        Positioned(
-          top: 120,
-          left: 155,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Container(
-              color: Colors.red,
-              width: 15,
-              height: 15,
-            ),
+        padding: EdgeInsets.all(0),
+        width: 170,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+            width: 2,
           ),
-        )
-      ],
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.primary,
+              blurRadius: 1,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            notesList[index].image.isNotEmpty
+                ? SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        child: Image.file(File(notesList[index].image))),
+                  )
+                : SizedBox(),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    notesList[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  Text(
+                    notesList[index].note,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        color: notesList[index].color,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

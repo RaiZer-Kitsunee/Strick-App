@@ -5,6 +5,8 @@ const String doneDailyTaskKey = "Done";
 
 const String projectKey = "project";
 
+const String notesKey = "note";
+
 const String nameKey = "name";
 
 const String themeKey = "theme";

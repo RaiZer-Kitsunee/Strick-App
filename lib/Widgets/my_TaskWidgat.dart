@@ -93,7 +93,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                                 dailyTasksList.removeAt(widget.simpleindex);
                               });
                               widget.refrech();
-                              saveIntoSp();
+                              saveTasksIntoSp();
                             },
                           ),
                         ),
@@ -177,6 +177,6 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
 
 extension MyExtension on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }

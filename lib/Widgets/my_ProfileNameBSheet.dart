@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:strick_app/Services/projectService.dart';
-
 import 'package:strick_app/Shared/allTheLists.dart';
 
-void myBDSheet({
+void myProfileNameBSheetEdit({
   required BuildContext context,
   required VoidCallback refrech,
-  required int index,
-  required TextEditingController textEditingController,
+  required TextEditingController nameController,
+  required VoidCallback save,
 }) {
   showModalBottomSheet(
     isScrollControlled: true,
@@ -19,13 +17,13 @@ void myBDSheet({
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 200,
+          height: 170,
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "What is the Object Boss : ",
+                  "What is Your Name: ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.surface,
                     fontSize: 18,
@@ -38,12 +36,12 @@ void myBDSheet({
                 child: TextField(
                   autofocus: true,
                   autocorrect: true,
-                  controller: textEditingController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.edit_square),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.secondary,
-                    hintText: "i Dont Khow",
+                    hintText: "Name....",
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -79,13 +77,11 @@ void myBDSheet({
                       padding: const EdgeInsets.only(right: 20),
                       child: TextButton(
                         onPressed: () {
-                          if (textEditingController.text.isNotEmpty) {
-                            projectsList[index].object =
-                                textEditingController.text;
-                            refrech();
-                            saveProjectIntoSp();
-                            textEditingController.clear();
+                          if (nameController.text.isNotEmpty) {
+                            myProfile.name = nameController.text;
                             Navigator.pop(context);
+                            save();
+                            refrech();
                           } else {
                             print("-------------- is Empty HAHA");
                           }

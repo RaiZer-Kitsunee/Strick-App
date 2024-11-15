@@ -5,7 +5,7 @@ import 'package:strick_app/Keys/storage_keys.dart';
 import 'package:strick_app/Models/dailyTaskModel.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
-Future<void> saveIntoSp() async {
+Future<void> saveTasksIntoSp() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   //convert the data to json
   List<Map<String, dynamic>> jsonStringList =
@@ -25,7 +25,7 @@ Future<void> saveIntoSp() async {
 //* add Simple Tasks
 void addDailyTasks({required String name, required String descrption}) {
   dailyTasksList.add(DailyTask(title: name, descrption: descrption));
-  saveIntoSp();
+  saveTasksIntoSp();
 }
 
 //* update Simple Tasks
@@ -36,17 +36,17 @@ void updateDailyTasks({
 }) {
   dailyTasksList[index].title = newTilte;
   dailyTasksList[index].descrption = newDisciption;
-  saveIntoSp();
+  saveTasksIntoSp();
 }
 
 //* delete Simple Tasks
 void deleteDailyTasks({required int index}) {
   dailyTasksList.removeAt(index);
-  saveIntoSp();
+  saveTasksIntoSp();
 }
 
 //* delete Done Simple Tasks
 void deleteDoneDailyTasks({required int index}) {
   doneDailyTaskList.removeAt(index);
-  saveIntoSp();
+  saveTasksIntoSp();
 }
