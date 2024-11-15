@@ -99,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 20),
                     Row(
                       children: [
                         Padding(
@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                             child: SizedBox(
-                              width: 165,
+                              width: 126,
                               child: Text(
                                 myProfile.name.isNotEmpty
                                     ? myProfile.name

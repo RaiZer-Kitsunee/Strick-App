@@ -156,7 +156,7 @@ class _EditNoteState extends State<EditNote> {
             child: SizedBox(
               width: 350,
               child: TextField(
-                maxLines: 10,
+                maxLines: 50,
                 controller: widget.noteController,
                 decoration: InputDecoration(
                   border: InputBorder.none,

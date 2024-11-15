@@ -6,9 +6,13 @@ import 'package:strick_app/Models/dailyTaskModel.dart';
 
 List<DailyTask> dailyTasksList = [];
 
+List<DailyTask> filteredDailyTasks = [];
+
 List<DailyTask> doneDailyTaskList = [];
 
 List<Note> notesList = [];
+
+List<Note> filteredNotes = [];
 
 List<Projects> projectsList = [
   Projects(

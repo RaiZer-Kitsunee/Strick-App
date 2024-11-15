@@ -28,16 +28,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //! varebelis
+  //* varebelis
   bool selected = false;
+  bool selectedSearch = false;
   bool isOnlyTask = false;
   late SharedPreferences pref;
   Random random = Random();
 
-  //! controllers
+  //* controllers
   TextEditingController projectsController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
-  //! functions
+  //* functions
   getShearedPref() async {
     pref = await SharedPreferences.getInstance();
     readFromSp();
@@ -53,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     List<dynamic> loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
     List<dynamic> loadedJsonProjectList = jsonDecode(loadedStringProjectList!);
 
-    dailyTasksList =
+    filteredDailyTasks = dailyTasksList =
         loadedJsonList.map((element) => DailyTask.fromJson(element)).toList();
     doneDailyTaskList = loadedJsonDoneList
         .map((element) => DailyTask.fromJson(element))
@@ -70,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     }
     final task = dailyTasksList.removeAt(oldIndex);
     dailyTasksList.insert(newIndex, task);
+    saveTasksIntoSp();
   }
 
   void welcomeNotification() async {
@@ -79,6 +82,19 @@ class _HomePageState extends State<HomePage> {
       scheduled: true,
       interval: Duration(seconds: 5),
     );
+  }
+
+  void filteredTheDailyTasks(String quary) {
+    setState(() {
+      if (quary.isEmpty) {
+        filteredDailyTasks = dailyTasksList;
+      } else {
+        filteredDailyTasks = dailyTasksList
+            .where((task) =>
+                task.title.toLowerCase().contains(quary.toLowerCase()))
+            .toList();
+      }
+    });
   }
 
   @override
@@ -97,7 +113,14 @@ class _HomePageState extends State<HomePage> {
           SliverAppBar(
             backgroundColor: Theme.of(context).colorScheme.secondary,
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  selectedSearch = !selectedSearch;
+                  isOnlyTask = !isOnlyTask;
+                  searchController.clear();
+                  filteredDailyTasks = dailyTasksList;
+                });
+              },
               icon: Icon(
                 Icons.search,
                 size: 25,
@@ -126,110 +149,128 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
             centerTitle: true,
-            expandedHeight: 160,
+            expandedHeight: selectedSearch ? 0 : 160,
             pinned: true,
-            title: InkWell(
-                onTap: () async {
-                  if (doneDailyTaskList.isEmpty) {
-                    print("nothing to do");
-                  } else {
-                    setState(() {
-                      dailyTasksList.addAll(doneDailyTaskList);
-                      doneDailyTaskList.clear();
-                      for (var task in dailyTasksList) {
-                        task.isDone = false;
+            title: selectedSearch
+                ? TextField(
+                    autofocus: true,
+                    controller: searchController,
+                    decoration: InputDecoration(
+                        hintText: "Search...",
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        border: InputBorder.none),
+                    onChanged: filteredTheDailyTasks,
+                  )
+                : InkWell(
+                    onTap: () async {
+                      if (doneDailyTaskList.isEmpty) {
+                        print("nothing to do");
+                      } else {
+                        setState(() {
+                          dailyTasksList.addAll(doneDailyTaskList);
+                          doneDailyTaskList.clear();
+                          for (var task in dailyTasksList) {
+                            task.isDone = false;
+                          }
+                          saveTasksIntoSp();
+                        });
+                        print("Object Complete");
                       }
-                      saveTasksIntoSp();
-                    });
-                    print("Object Complete");
-                  }
-                },
-                child: Text("S T R I C K")),
+                    },
+                    child: Text("S T R I C K")),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),
                 bottomRight: Radius.circular(35),
               ),
             ),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Padding(
-                padding: const EdgeInsets.only(top: 85),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            flexibleSpace: selectedSearch
+                ? Container()
+                : FlexibleSpaceBar(
+                    background: Padding(
+                      padding: const EdgeInsets.only(top: 85),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Hey ${myProfile.name} !",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.surface,
-                              fontSize: 16,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Hey ${myProfile.name} !",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                SizedBox(
+                                  width: 250,
+                                  child: Text(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    "Let's make some tasks",
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.surface,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          SizedBox(
-                            width: 250,
-                            child: Text(
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              "Let's make some tasks",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.surface,
-                                fontSize: 20,
+                          Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await NotificationService.showNotification(
+                                      title: "Wisdom of the day",
+                                      body: animeQuotes[
+                                          random.nextInt(animeQuotes.length)],
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.surface,
+                                    backgroundImage: myProfile.image == "null"
+                                        ? AssetImage(
+                                            "assets/computer-icons-user.png")
+                                        : FileImage(File(myProfile.image)),
+                                    radius: 30,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                              Positioned(
+                                top: 46,
+                                right: 64,
+                                child: Container(
+                                  height: 14,
+                                  width: 14,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
-                    Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: InkWell(
-                            onTap: () async {
-                              await NotificationService.showNotification(
-                                title: "Wisdom of the day",
-                                body: animeQuotes[
-                                    random.nextInt(animeQuotes.length)],
-                              );
-                            },
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.surface,
-                              backgroundImage: myProfile.image == "null"
-                                  ? AssetImage("assets/computer-icons-user.png")
-                                  : FileImage(File(myProfile.image)),
-                              radius: 30,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 45,
-                          right: 65,
-                          child: Container(
-                            height: 15,
-                            width: 15,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.secondary,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -286,13 +327,13 @@ class _HomePageState extends State<HomePage> {
                   textEditingController: projectsController,
                   onTap: () => myBSheet(context, () => setState(() {})),
                 ),
-                dailyTasksList.isEmpty
+                filteredDailyTasks.isEmpty
                     ? IfThereISNothing()
                     : ReorderableListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         padding: EdgeInsets.only(top: 15),
-                        itemCount: dailyTasksList.length,
+                        itemCount: filteredDailyTasks.length,
                         onReorder: (oldIndex, newIndex) =>
                             reorderMyDailyTasks(oldIndex, newIndex),
                         itemBuilder: (context, index) {
@@ -300,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                             context: context,
                             index: index,
                             child: MyTaskWidget(
-                              title: dailyTasksList[index].title,
+                              title: filteredDailyTasks[index].title,
                               simpleindex: index,
                               refrech: () => setState(() {}),
                             ),

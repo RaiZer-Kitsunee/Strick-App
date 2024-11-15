@@ -22,8 +22,8 @@ class MyNotewidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        titleController.text = notesList[index].title;
-        noteController.text = notesList[index].note;
+        titleController.text = filteredNotes[index].title;
+        noteController.text = filteredNotes[index].note;
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -63,14 +63,18 @@ class MyNotewidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            notesList[index].image.isNotEmpty
+            filteredNotes[index].image.isNotEmpty
                 ? SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10)),
-                        child: Image.file(File(notesList[index].image))),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      child: Image.file(
+                        File(filteredNotes[index].image),
+                      ),
+                    ),
                   )
                 : SizedBox(),
             Padding(
@@ -79,7 +83,7 @@ class MyNotewidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    notesList[index].title,
+                    filteredNotes[index].title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -87,7 +91,9 @@ class MyNotewidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    notesList[index].note,
+                    filteredNotes[index].note,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -100,7 +106,7 @@ class MyNotewidget extends StatelessWidget {
                       child: Container(
                         width: 15,
                         height: 15,
-                        color: notesList[index].color,
+                        color: filteredNotes[index].color,
                       ),
                     ),
                   ),

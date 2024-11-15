@@ -73,7 +73,7 @@ class _SettingPageState extends State<SettingPage> {
               custom_button(
                 title: 'App version :',
                 trailing: const Text(
-                  "2.0",
+                  "2.3",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

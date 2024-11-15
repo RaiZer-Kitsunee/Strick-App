@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 270),
+              padding: const EdgeInsets.only(bottom: 205),
               child: Icon(
                 Icons.app_registration,
                 size: 120,

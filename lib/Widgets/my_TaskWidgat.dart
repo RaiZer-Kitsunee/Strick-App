@@ -29,9 +29,10 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onDoubleTap: () {
-        textEditingController.text = dailyTasksList[widget.simpleindex].title;
+        textEditingController.text =
+            filteredDailyTasks[widget.simpleindex].title;
         descrptionController.text =
-            dailyTasksList[widget.simpleindex].descrption;
+            filteredDailyTasks[widget.simpleindex].descrption;
         myBSheetEdit(
           context: context,
           simpleindex: widget.simpleindex,
@@ -79,18 +80,19 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            value: dailyTasksList[widget.simpleindex].isDone,
+                            value:
+                                filteredDailyTasks[widget.simpleindex].isDone,
                             onChanged: (value) async {
-                              dailyTasksList[widget.simpleindex].isDone =
+                              filteredDailyTasks[widget.simpleindex].isDone =
                                   value!;
                               widget.refrech();
                               await Future.delayed(
                                 Duration(milliseconds: 700),
                               );
                               setState(() {
-                                doneDailyTaskList
-                                    .add(dailyTasksList[widget.simpleindex]);
-                                dailyTasksList.removeAt(widget.simpleindex);
+                                doneDailyTaskList.add(
+                                    filteredDailyTasks[widget.simpleindex]);
+                                filteredDailyTasks.removeAt(widget.simpleindex);
                               });
                               widget.refrech();
                               saveTasksIntoSp();
@@ -108,7 +110,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.secondary,
                               decoration:
-                                  dailyTasksList[widget.simpleindex].isDone
+                                  filteredDailyTasks[widget.simpleindex].isDone
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
                               decorationThickness: 2.5,
@@ -128,16 +130,16 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
             alignment: Alignment.centerRight,
             child: AnimatedContainer(
               duration: Duration(milliseconds: 300),
-              margin: dailyTasksList[widget.simpleindex].isDone
+              margin: filteredDailyTasks[widget.simpleindex].isDone
                   ? EdgeInsets.only(left: 15, right: 15, top: 0)
                   : EdgeInsets.only(right: 24, top: 27),
-              height: dailyTasksList[widget.simpleindex].isDone ? 65 : 10,
-              width: dailyTasksList[widget.simpleindex].isDone
+              height: filteredDailyTasks[widget.simpleindex].isDone ? 65 : 10,
+              width: filteredDailyTasks[widget.simpleindex].isDone
                   ? MediaQuery.sizeOf(context).width
                   : 10,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.secondary,
-                borderRadius: dailyTasksList[widget.simpleindex].isDone
+                borderRadius: filteredDailyTasks[widget.simpleindex].isDone
                     ? BorderRadius.all(
                         Radius.circular(15),
                       )
@@ -163,7 +165,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
           ),
         ),
         content: Text(
-          dailyTasksList[widget.simpleindex].descrption,
+          filteredDailyTasks[widget.simpleindex].descrption,
           style: TextStyle(
             overflow: TextOverflow.clip,
             color: Theme.of(context).colorScheme.secondary,
