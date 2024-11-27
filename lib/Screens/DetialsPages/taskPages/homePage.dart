@@ -53,6 +53,10 @@ class _HomePageState extends State<HomePage> {
   //   );
   // }
 
+  double percent() {
+    return ((myProfile.xp * 100) / myProfile.xpToNextLevel) / 100;
+  }
+
   void filteredTheDailyTasks(String quary) {
     setState(() {
       if (quary.isEmpty) {
@@ -72,6 +76,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: [
+          //* this is the super app bar
           SliverAppBar(
             backgroundColor: Theme.of(context).colorScheme.secondary,
             leading: IconButton(
@@ -151,12 +156,12 @@ class _HomePageState extends State<HomePage> {
                 ? Container()
                 : FlexibleSpaceBar(
                     background: Padding(
-                      padding: const EdgeInsets.only(top: 70),
+                      padding: const EdgeInsets.only(top: 100),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0),
+                            padding: const EdgeInsets.only(left: 25),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,16 +191,25 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 //TODO level bar
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10),
-                                  height: 20,
-                                  width: 280,
-                                  child: LinearPercentIndicator(
-                                    percent: 0.9,
-                                    progressColor: Colors.blue,
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text((myProfile.level - 1).toString()),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      height: 20,
+                                      width: 205,
+                                      child: LinearPercentIndicator(
+                                        barRadius: Radius.circular(10),
+                                        percent: percent(),
+                                        progressColor: Colors.blue,
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                    Text(myProfile.level.toString()),
+                                  ],
                                 )
                               ],
                             ),
@@ -203,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                           Stack(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
+                                padding: const EdgeInsets.only(right: 20),
                                 child: InkWell(
                                   onTap: () async {
                                     await NotificationService.showNotification(

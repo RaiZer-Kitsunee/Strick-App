@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Services/dailyTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheetEdit.dart';
@@ -25,6 +26,15 @@ class MyTaskWidget extends StatefulWidget {
 class _MyTaskWidgetState extends State<MyTaskWidget> {
   TextEditingController textEditingController = TextEditingController();
   TextEditingController descrptionController = TextEditingController();
+
+  //* save level of the player
+  void saveLevelToSp() async {
+    SharedPreferences prefe = await SharedPreferences.getInstance();
+    prefe.setInt("level", myProfile.level);
+    prefe.setInt("xp", myProfile.xp);
+    prefe.setInt("xpToNextLevel", myProfile.xpToNextLevel);
+    print("save complete");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +95,10 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                             value:
                                 filteredDailyTasks[widget.simpleindex].isDone,
                             onChanged: (value) async {
-                              myProfile.addRandomXp();
+                              //* here i will give random xp to task every time i finish
+                              filteredDailyTasks[widget.simpleindex].xp =
+                                  myProfile.addRandomXp();
+                              //* the reset of the function
                               filteredDailyTasks[widget.simpleindex].isDone =
                                   value!;
                               widget.refrech();
@@ -99,12 +112,13 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                               });
                               widget.refrech();
                               saveTasksIntoSp();
+                              saveLevelToSp();
                             },
                           ),
                         ),
                         SizedBox(width: 10),
                         SizedBox(
-                          width: 240,
+                          width: 195,
                           child: Text(
                             overflow: TextOverflow.clip,
                             "${widget.simpleindex + 1}. ${widget.title}",
@@ -124,7 +138,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                         ),
                         //* how mush xp this thing
                         Text(
-                          " Xp: ${myProfile.addRandomXp().toString()}",
+                          " Xp: ${filteredDailyTasks[widget.simpleindex].xp}",
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           ),

@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   readNotesFromSp() async {
     //* for simple notes
-    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
     String? loadedStringList = pref.getString(notesKey);
     if (loadedStringList != null) {
       List<dynamic> loadedJsonList = jsonDecode(loadedStringList);
@@ -54,6 +54,13 @@ class _SplashScreenState extends State<SplashScreen>
           loadedJsonList.map((element) => Note.fromJson(element)).toList();
       setState(() {});
     }
+  }
+
+  readLevelFromSp() async {
+    pref = await SharedPreferences.getInstance();
+    myProfile.xp = pref.getInt("xp")!;
+    myProfile.level = pref.getInt("level")!;
+    myProfile.xpToNextLevel = pref.getInt("xpToNextLevel")!;
   }
 
   void loadImage() async {
@@ -72,6 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     readTasksFromSp();
     readNotesFromSp();
+    readLevelFromSp();
     loadImage();
     loadName();
     Future.delayed(

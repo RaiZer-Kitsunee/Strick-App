@@ -73,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               //* welcome page things
@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
               //* profile name
               profileName(context),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
               //* first section
               //* info about the app things
@@ -146,11 +146,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
 
-              //* box of any thing
+              //* box of Prefernces
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
                 width: MediaQuery.sizeOf(context).width,
-                height: 270,
+                height: 260,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(12),
@@ -214,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     MySettingTile(
                         title: "Version",
                         onTap: () {},
-                        prefix: Text("2.3"),
+                        prefix: Text("2.7"),
                         isCustom: true),
                   ],
                 ),
@@ -228,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Padding profileName(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 10),
       child: Text(
         myProfile.name.isNotEmpty ? myProfile.name : "Me!!!",
         overflow: TextOverflow.clip,
@@ -243,7 +243,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Padding profileImage(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 40),
+      padding: const EdgeInsets.only(top: 25),
       child: InkWell(
         onTap: PickImage,
         child: CircleAvatar(
@@ -251,7 +251,7 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundImage: myProfile.image == "null"
               ? const AssetImage("assets/computer-icons-user.png")
               : FileImage(File(myProfile.image)),
-          radius: 55,
+          radius: 45,
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
