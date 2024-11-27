@@ -10,6 +10,7 @@ class MyTaskWidget extends StatefulWidget {
   final String title;
   final int simpleindex;
   final VoidCallback refrech;
+
   const MyTaskWidget({
     super.key,
     required this.title,
@@ -46,7 +47,8 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
       },
       child: Stack(
         children: [
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
             margin: EdgeInsets.only(bottom: 10, right: 15, left: 15),
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
@@ -83,6 +85,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                             value:
                                 filteredDailyTasks[widget.simpleindex].isDone,
                             onChanged: (value) async {
+                              myProfile.addRandomXp();
                               filteredDailyTasks[widget.simpleindex].isDone =
                                   value!;
                               widget.refrech();
@@ -101,13 +104,13 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                         ),
                         SizedBox(width: 10),
                         SizedBox(
-                          width: 250,
+                          width: 240,
                           child: Text(
                             overflow: TextOverflow.clip,
                             "${widget.simpleindex + 1}. ${widget.title}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              fontSize: 16,
                               color: Theme.of(context).colorScheme.secondary,
                               decoration:
                                   filteredDailyTasks[widget.simpleindex].isDone
@@ -117,6 +120,13 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                               decorationColor:
                                   Theme.of(context).colorScheme.secondary,
                             ),
+                          ),
+                        ),
+                        //* how mush xp this thing
+                        Text(
+                          " Xp: ${myProfile.addRandomXp().toString()}",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ],

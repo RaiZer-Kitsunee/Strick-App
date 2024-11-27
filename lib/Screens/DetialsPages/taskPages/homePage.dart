@@ -1,13 +1,9 @@
-// ignore_for_file: file_names
-import 'dart:convert';
+// ignore_for_file: file_names, avoid_print
 import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:strick_app/Keys/storage_keys.dart';
-import 'package:strick_app/Models/projectsModel.dart';
-import 'package:strick_app/Models/dailyTaskModel.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:strick_app/Services/notification_service.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Services/dailyTasksService.dart';
@@ -32,39 +28,12 @@ class _HomePageState extends State<HomePage> {
   bool selected = false;
   bool selectedSearch = false;
   bool isOnlyTask = false;
-  late SharedPreferences pref;
+
   Random random = Random();
 
   //* controllers
   TextEditingController projectsController = TextEditingController();
   TextEditingController searchController = TextEditingController();
-
-  //* functions
-  getShearedPref() async {
-    pref = await SharedPreferences.getInstance();
-    readFromSp();
-  }
-
-  readFromSp() {
-    //* For simple tasks
-    String? loadedStringList = pref.getString(dailyTaskKey);
-    String? loadedStringDoneList = pref.getString(doneDailyTaskKey);
-    String? loadedStringProjectList = pref.getString(projectKey);
-
-    List<dynamic> loadedJsonList = jsonDecode(loadedStringList!);
-    List<dynamic> loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
-    List<dynamic> loadedJsonProjectList = jsonDecode(loadedStringProjectList!);
-
-    filteredDailyTasks = dailyTasksList =
-        loadedJsonList.map((element) => DailyTask.fromJson(element)).toList();
-    doneDailyTaskList = loadedJsonDoneList
-        .map((element) => DailyTask.fromJson(element))
-        .toList();
-    projectsList = loadedJsonProjectList
-        .map((element) => Projects.fromJson(element))
-        .toList();
-    setState(() {});
-  }
 
   void reorderMyDailyTasks(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
@@ -75,14 +44,14 @@ class _HomePageState extends State<HomePage> {
     saveTasksIntoSp();
   }
 
-  void welcomeNotification() async {
-    await NotificationService.showNotification(
-      title: "Strick Time",
-      body: 'Hey Master ${myProfile.name} Welcome Back',
-      scheduled: true,
-      interval: Duration(seconds: 5),
-    );
-  }
+  // void welcomeNotification() async {
+  //   await NotificationService.showNotification(
+  //     title: "Strick Time",
+  //     body: 'Hey Master ${myProfile.name} Welcome Back',
+  //     scheduled: true,
+  //     interval: Duration(seconds: 5),
+  //   );
+  // }
 
   void filteredTheDailyTasks(String quary) {
     setState(() {
@@ -95,13 +64,6 @@ class _HomePageState extends State<HomePage> {
             .toList();
       }
     });
-  }
-
-  @override
-  void initState() {
-    getShearedPref();
-    welcomeNotification();
-    super.initState();
   }
 
   @override
@@ -189,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                 ? Container()
                 : FlexibleSpaceBar(
                     background: Padding(
-                      padding: const EdgeInsets.only(top: 85),
+                      padding: const EdgeInsets.only(top: 70),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -199,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                //* the welcome page thing
                                 Text(
                                   "Hey ${myProfile.name} !",
                                   style: TextStyle(
@@ -208,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
+                                //* greeting thing
                                 SizedBox(
                                   width: 250,
                                   child: Text(
@@ -221,6 +185,18 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ),
+                                //TODO level bar
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  height: 20,
+                                  width: 280,
+                                  child: LinearPercentIndicator(
+                                    percent: 0.9,
+                                    progressColor: Colors.blue,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -239,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                   child: CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).colorScheme.surface,
-                                    backgroundImage: myProfile.image == "null"
+                                    backgroundImage: myProfile.image == "fk you"
                                         ? AssetImage(
                                             "assets/computer-icons-user.png")
                                         : FileImage(File(myProfile.image)),

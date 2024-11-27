@@ -1,10 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Keys/storage_keys.dart';
+import 'package:strick_app/Models/dailyTaskModel.dart';
 import 'package:strick_app/Models/noteModel.dart';
+import 'package:strick_app/Models/projectsModel.dart';
 import 'package:strick_app/Screens/Original/startPage.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
@@ -17,35 +21,61 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  late SharedPreferences pref;
+  readTasksFromSp() async {
+    pref = await SharedPreferences.getInstance();
+    //* For simple tasks
+    String? loadedStringList = pref.getString(dailyTaskKey);
+    String? loadedStringDoneList = pref.getString(doneDailyTaskKey);
+    String? loadedStringProjectList = pref.getString(projectKey);
+
+    List<dynamic>? loadedJsonList = jsonDecode(loadedStringList!);
+    List<dynamic>? loadedJsonDoneList = jsonDecode(loadedStringDoneList!);
+    List<dynamic>? loadedJsonProjectList = jsonDecode(loadedStringProjectList!);
+
+    filteredDailyTasks = dailyTasksList =
+        loadedJsonList!.map((element) => DailyTask.fromJson(element)).toList();
+    doneDailyTaskList = loadedJsonDoneList!
+        .map((element) => DailyTask.fromJson(element))
+        .toList();
+    projectsList = loadedJsonProjectList!
+        .map((element) => Projects.fromJson(element))
+        .toList();
+    setState(() {});
+  }
+
   readNotesFromSp() async {
     //* for simple notes
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? loadedStringList = pref.getString(notesKey);
-    List<dynamic> loadedJsonList = jsonDecode(loadedStringList!);
-    notesList =
-        loadedJsonList.map((element) => Note.fromJson(element)).toList();
-    setState(() {});
+    if (loadedStringList != null) {
+      List<dynamic> loadedJsonList = jsonDecode(loadedStringList);
+      notesList =
+          loadedJsonList.map((element) => Note.fromJson(element)).toList();
+      setState(() {});
+    }
   }
 
   void loadImage() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    myProfile.image = pref.getString("Pimage")!;
+    myProfile.image = pref.getString("Pimage") ?? "";
   }
 
   void loadName() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    myProfile.name = pref.getString("PName")!;
+    myProfile.name = pref.getString("PName") ?? "ME!!";
   }
 
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     super.initState();
+    readTasksFromSp();
     readNotesFromSp();
     loadImage();
     loadName();
     Future.delayed(
-      Duration(seconds: 2),
+      Duration(milliseconds: 50),
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => StartPage(),

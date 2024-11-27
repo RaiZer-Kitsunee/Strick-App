@@ -61,7 +61,7 @@ class _NotePageState extends State<NotePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "My Note",
+                  "Notes",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,

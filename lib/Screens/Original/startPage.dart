@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:strick_app/Screens/DetialsPages/taskPages/homePage.dart';
 import 'package:strick_app/Screens/DetialsPages/profilePage.dart';
-import 'package:strick_app/Screens/DetialsPages/settingPage.dart';
 
 import 'package:strick_app/Widgets/my_CNB.dart';
 import '../DetialsPages/notePages/notePage.dart';
@@ -52,7 +51,6 @@ class _StartPageState extends State<StartPage> {
         children: [
           const HomePage(),
           const NotePage(),
-          const SettingPage(),
           ProfilePage(
             onRefrech: () => setState(() {}),
           ),

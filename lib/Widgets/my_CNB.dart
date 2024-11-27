@@ -35,8 +35,6 @@ class _MyCNBState extends State<MyCNB> {
             size: 30, color: Theme.of(context).colorScheme.surface),
         Icon(Icons.notes,
             size: 30, color: Theme.of(context).colorScheme.surface),
-        Icon(Icons.settings,
-            size: 30, color: Theme.of(context).colorScheme.surface),
         CircleAvatar(
           backgroundColor: Theme.of(context).colorScheme.surface,
           backgroundImage: myProfile.image == "null"
