@@ -30,3 +30,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// Calculate the initial delay until midnight
+// Duration _calculateInitialDelay() {
+//   final now = DateTime.now();
+//   final midnight = DateTime(now.year, now.month, now.day + 1);
+//   return midnight.difference(now);
+// }

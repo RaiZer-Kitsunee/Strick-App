@@ -18,7 +18,7 @@ class _NotePageState extends State<NotePage> {
   TextEditingController noteController = TextEditingController();
   TextEditingController searchController = TextEditingController();
 
-  bool isReading = true;
+  bool selectedLogo = true;
 
   @override
   void initState() {
@@ -41,7 +41,6 @@ class _NotePageState extends State<NotePage> {
 
   void toggleSearchBar() {
     setState(() {
-      isReading = !isReading;
       searchController.clear();
       filteredNotes = notesList;
     });
@@ -52,69 +51,79 @@ class _NotePageState extends State<NotePage> {
     return Scaffold(
       floatingActionButton: floatingThing(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: ListView(
+        padding: EdgeInsets.zero,
         children: [
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Notes",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  backgroundImage: myProfile.image == "null"
-                      ? AssetImage("assets/computer-icons-user.png")
-                      : FileImage(File(myProfile.image)),
-                  radius: 30,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 12, right: 12, bottom: 20, top: 10),
-            width: MediaQuery.sizeOf(context).width,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              leading: IconButton(
-                icon: Icon(Icons.search_rounded),
-                onPressed: toggleSearchBar,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedLogo = !selectedLogo;
+              });
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 1000),
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 50),
+              width: MediaQuery.sizeOf(context).width,
+              height: selectedLogo ? 70 : 60,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(50),
               ),
-              title: TextField(
-                readOnly: isReading ? true : false,
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: isReading ? "" : "Search...",
-                  hintStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  border: InputBorder.none,
-                ),
-                onChanged: filterdTheNote,
-              ),
-              trailing: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                child: Icon(
-                  Icons.menu,
-                  size: 25,
-                ),
-              ),
+              child: selectedLogo
+                  ? Container(
+                      margin: EdgeInsets.only(left: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Notes",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Theme.of(context).colorScheme.surface,
+                            ),
+                          ),
+                          CircleAvatar(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            backgroundImage: myProfile.image == "null"
+                                ? AssetImage("assets/computer-icons-user.png")
+                                : FileImage(File(myProfile.image)),
+                            radius: 30,
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListTile(
+                      leading: Icon(
+                        Icons.search_rounded,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                      title: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: "Search...",
+                          hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        onChanged: filterdTheNote,
+                      ),
+                      trailing: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedLogo = !selectedLogo;
+                            toggleSearchBar();
+                          });
+                        },
+                        child: Icon(
+                          Icons.cancel_rounded,
+                          size: 25,
+                        ),
+                      ),
+                    ),
             ),
           ),
           notesList.isEmpty

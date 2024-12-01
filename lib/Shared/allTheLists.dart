@@ -66,6 +66,8 @@ List<Projects> projectsList = [
 
 Profile myProfile = Profile(name: "ME!!!", image: "null");
 
+List<Profile> profilelist = [myProfile];
+
 List<String> animeQuotes = [
   "I’m not gonna run away. I never go back on my word! That’s my ninja way! - Naruto Uzumaki (Naruto)",
   "I don’t want to conquer anything. I just think the guy with the most freedom in this whole ocean… is the Pirate King! - Monkey D. Luffy (One Piece)",

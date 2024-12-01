@@ -15,7 +15,7 @@ void myBSheet(BuildContext context, VoidCallback refrech) {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 340,
+          height: 320,
           child: Column(
             children: [
               Padding(

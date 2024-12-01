@@ -47,7 +47,7 @@ class MyNotewidget extends StatelessWidget {
         padding: EdgeInsets.all(0),
         width: 170,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: Theme.of(context).colorScheme.primary,
@@ -87,7 +87,7 @@ class MyNotewidget extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   Text(
@@ -95,7 +95,7 @@ class MyNotewidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -58,9 +58,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   readLevelFromSp() async {
     pref = await SharedPreferences.getInstance();
-    myProfile.xp = pref.getInt("xp")!;
-    myProfile.level = pref.getInt("level")!;
-    myProfile.xpToNextLevel = pref.getInt("xpToNextLevel")!;
+    myProfile.xp = pref.getInt(xpKey)!;
+    myProfile.level = pref.getInt(levelKey)!;
+    myProfile.xpToNextLevel = pref.getInt(xpToNextLevelKey)!;
   }
 
   void loadImage() async {

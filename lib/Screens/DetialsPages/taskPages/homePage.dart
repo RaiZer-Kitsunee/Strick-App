@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, unnecessary_string_interpolations
 import 'dart:io';
 import 'dart:math';
 
@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //* varebelis
   bool selected = false;
+  bool selectedLevel = false;
   bool selectedSearch = false;
   bool isOnlyTask = false;
 
@@ -43,15 +44,6 @@ class _HomePageState extends State<HomePage> {
     dailyTasksList.insert(newIndex, task);
     saveTasksIntoSp();
   }
-
-  // void welcomeNotification() async {
-  //   await NotificationService.showNotification(
-  //     title: "Strick Time",
-  //     body: 'Hey Master ${myProfile.name} Welcome Back',
-  //     scheduled: true,
-  //     interval: Duration(seconds: 5),
-  //   );
-  // }
 
   double percent() {
     return ((myProfile.xp * 100) / myProfile.xpToNextLevel) / 100;
@@ -116,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
             centerTitle: true,
-            expandedHeight: selectedSearch ? 0 : 160,
+            expandedHeight: selectedSearch ? 0 : 145,
             pinned: true,
             title: selectedSearch
                 ? TextField(
@@ -135,11 +127,11 @@ class _HomePageState extends State<HomePage> {
                         print("nothing to do");
                       } else {
                         setState(() {
-                          dailyTasksList.addAll(doneDailyTaskList);
-                          doneDailyTaskList.clear();
-                          for (var task in dailyTasksList) {
+                          for (var task in doneDailyTaskList) {
                             task.isDone = false;
+                            dailyTasksList.add(task);
                           }
+                          doneDailyTaskList.clear();
                           saveTasksIntoSp();
                         });
                         print("Object Complete");
@@ -156,68 +148,14 @@ class _HomePageState extends State<HomePage> {
                 ? Container()
                 : FlexibleSpaceBar(
                     background: Padding(
-                      padding: const EdgeInsets.only(top: 100),
+                      padding: const EdgeInsets.only(top: 85),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 25),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //* the welcome page thing
-                                Text(
-                                  "Hey ${myProfile.name} !",
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                //* greeting thing
-                                SizedBox(
-                                  width: 250,
-                                  child: Text(
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    "Let's make some tasks",
-                                    style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.surface,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                //TODO level bar
-                                Row(
-                                  children: [
-                                    Text((myProfile.level - 1).toString()),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      height: 20,
-                                      width: 205,
-                                      child: LinearPercentIndicator(
-                                        barRadius: Radius.circular(10),
-                                        percent: percent(),
-                                        progressColor: Colors.blue,
-                                        backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ),
-                                    Text(myProfile.level.toString()),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
                           Stack(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 20),
+                                padding: const EdgeInsets.only(left: 15),
                                 child: InkWell(
                                   onTap: () async {
                                     await NotificationService.showNotification(
@@ -233,13 +171,13 @@ class _HomePageState extends State<HomePage> {
                                         ? AssetImage(
                                             "assets/computer-icons-user.png")
                                         : FileImage(File(myProfile.image)),
-                                    radius: 30,
+                                    radius: 35,
                                   ),
                                 ),
                               ),
                               Positioned(
-                                top: 46,
-                                right: 64,
+                                top: 53,
+                                left: 65,
                                 child: Container(
                                   height: 14,
                                   width: 14,
@@ -256,7 +194,91 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                selectedLevel
+                                    ? SizedBox()
+                                    : Text(
+                                        "${myProfile.name}",
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surface,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  height: 20,
+                                  width: 245,
+                                  child: LinearPercentIndicator(
+                                    leading: Text(
+                                      "Lv.${(myProfile.level).toString()}",
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    trailing: Text(
+                                      "${(myProfile.xp).toString()}/${(myProfile.xpToNextLevel).toString()}",
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    lineHeight: 10,
+                                    barRadius: Radius.circular(10),
+                                    percent: percent(),
+                                    progressColor: percent() <= 0.25
+                                        ? Colors.red
+                                        : Colors.blue,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedLevel = !selectedLevel;
+                                    });
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: Duration(milliseconds: 1000),
+                                    width: selectedLevel ? 240 : 40,
+                                    height: selectedLevel ? 60 : 5,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: selectedLevel
+                                        ? Center(
+                                            child: Text(
+                                              "Keep Going",
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .surface,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

@@ -19,7 +19,7 @@ void myBDSheet({
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 200,
+          height: 160,
           child: Column(
             children: [
               Padding(

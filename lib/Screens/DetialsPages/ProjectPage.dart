@@ -23,6 +23,8 @@ class _ProjectPageState extends State<ProjectPage> {
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController objectEditingController = TextEditingController();
 
+  bool selectedObjetct = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,82 +129,99 @@ class _ProjectPageState extends State<ProjectPage> {
               )
             ],
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            width: MediaQuery.sizeOf(context).width,
-            height: 140,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).colorScheme.surface,
-                width: 2.5,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedObjetct = !selectedObjetct;
+              });
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 700),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: MediaQuery.sizeOf(context).width,
+              height: selectedObjetct ? 140 : 65,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.surface,
+                  width: 2.5,
+                ),
+                borderRadius: BorderRadius.circular(15),
               ),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "[ ",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, top: 5, right: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "[ ",
+                                style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: "Object:",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
+                              TextSpan(
+                                text: "Object:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: " ]",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+                              TextSpan(
+                                text: " ]",
+                                style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          objectEditingController.text =
-                              projectsList[widget.indexProject].object;
-                          myBDSheet(
-                            textEditingController: objectEditingController,
-                            context: context,
-                            index: widget.indexProject,
-                            refrech: () {
-                              widget.refrech();
-                              setState(() {});
-                            },
-                          );
-                        },
-                        icon: const Icon(Icons.import_contacts),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    overflow: TextOverflow.clip,
-                    textAlign: TextAlign.left,
-                    projectsList[widget.indexProject].object,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16),
-                  ),
-                ],
+                        IconButton(
+                          onPressed: selectedObjetct
+                              ? () {
+                                  objectEditingController.text =
+                                      projectsList[widget.indexProject].object;
+                                  myBDSheet(
+                                    textEditingController:
+                                        objectEditingController,
+                                    context: context,
+                                    index: widget.indexProject,
+                                    refrech: () {
+                                      widget.refrech();
+                                      setState(() {});
+                                    },
+                                  );
+                                }
+                              : () {
+                                  setState(() {
+                                    selectedObjetct = !selectedObjetct;
+                                  });
+                                },
+                          icon: const Icon(Icons.import_contacts),
+                        ),
+                      ],
+                    ),
+                    selectedObjetct
+                        ? Text(
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.left,
+                            projectsList[widget.indexProject].object,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.surface,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
               ),
             ),
           ),

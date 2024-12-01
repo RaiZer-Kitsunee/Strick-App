@@ -1,15 +1,17 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Theme/theme_provider.dart';
 import 'package:strick_app/Widgets/my_ProfileNameBSheet.dart';
 import 'package:strick_app/Widgets/my_SettingTile.dart';
+import 'package:strick_app/Widgets/my_backUpBSheet.dart';
 
 class ProfilePage extends StatefulWidget {
   final VoidCallback onRefrech;
@@ -177,17 +179,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     MySettingTile(
                         title: "BackUp",
                         onTap: () {
-                          showDialog(
+                          mybackUpBSheet(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                "In Development ",
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                              ),
-                            ),
+                            refrech: () {
+                              widget.onRefrech();
+                              setState(() {});
+                            },
                           );
                         },
                         isCustom: false),

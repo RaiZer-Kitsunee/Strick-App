@@ -8,65 +8,6 @@ void myPBSheet({
 }) {
   TextEditingController textEditingController = TextEditingController();
 
-  // Future<void> _showTimePicker(
-  //     BuildContext context, TextEditingController controller) async {
-  //   TimeOfDay? selectedTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //     initialEntryMode: TimePickerEntryMode.dial,
-  //     builder: (context, child) => Theme(
-  //       data: ThemeData().copyWith(
-  //           colorScheme: ColorScheme.dark(primary: Colors.blueAccent)),
-  //       child: child!,
-  //     ),
-  //   );
-  //   if (selectedTime != null) {
-  //     controller.text = selectedTime.format(context);
-  //     refrech();
-  //   }
-  // }
-
-  // Padding myTextField({
-  //   required BuildContext context,
-  //   required Text label,
-  //   required TextEditingController controller,
-  //   required double width,
-  //   required bool readOnly,
-  //   required Color textColor,
-  //   required int numLines,
-  //   required Widget suffix,
-  // }) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-  //     child: SizedBox(
-  //       width: width,
-  //       child: TextField(
-  //         readOnly: readOnly,
-  //         controller: controller,
-  //         maxLines: numLines,
-  //         decoration: InputDecoration(
-  //           suffix: suffix,
-  //           label: label,
-  //           enabledBorder: OutlineInputBorder(
-  //             borderSide:
-  //                 BorderSide(color: Theme.of(context).colorScheme.primary),
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //           focusedBorder: OutlineInputBorder(
-  //             borderSide:
-  //                 BorderSide(color: Theme.of(context).colorScheme.surface),
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //         ),
-  //         style: TextStyle(
-  //           color: textColor,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -77,7 +18,7 @@ void myPBSheet({
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 170,
+          height: 160,
           child: Column(
             children: [
               Padding(

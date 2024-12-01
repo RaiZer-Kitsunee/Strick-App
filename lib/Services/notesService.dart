@@ -6,15 +6,13 @@ import 'package:strick_app/Keys/storage_keys.dart';
 import 'package:strick_app/Models/noteModel.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 
-Future<void> saveIntoSp() async {
+Future<void> saveNotesIntoSp() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   //convert the data to json
   List<Map<String, dynamic>> jsonStringList =
       notesList.map((element) => element.toJson()).toList();
-  print(jsonStringList);
   //convert the json to string
   String jsonString = jsonEncode(jsonStringList);
-  print(jsonString);
 
   //save the data into the shared preferences
   await pref.setString(notesKey, jsonString);
@@ -31,7 +29,7 @@ void addNote({
       color: Colors.transparent,
     ),
   );
-  saveIntoSp();
+  saveNotesIntoSp();
   print("save done");
 }
 
@@ -42,12 +40,12 @@ void updateNote({
 }) {
   notesList[index].title = newTitle;
   notesList[index].note = newNote;
-  saveIntoSp();
+  saveNotesIntoSp();
   print("save done");
 }
 
 void deleteNote({required int index}) {
   notesList.removeAt(index);
-  saveIntoSp();
+  saveNotesIntoSp();
   print("save done");
 }

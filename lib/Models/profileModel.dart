@@ -9,13 +9,13 @@ class Profile {
   String image;
   final Random _random = Random();
 
-  Profile(
-      {required this.name,
-      required this.image,
-      this.level = 1,
-      this.xp = 0,
-      thi})
-      : xpToNextLevel = 41;
+  Profile({
+    required this.name,
+    required this.image,
+    this.level = 1,
+    this.xp = 0,
+    this.xpToNextLevel = 1000,
+  });
 
   int addRandomXp() {
     int minXp = 10 * level;
@@ -42,6 +42,9 @@ class Profile {
     return <String, dynamic>{
       'name': name,
       'image': image,
+      'level': level,
+      'xp': xp,
+      'xpToNextLevel': xpToNextLevel,
     };
   }
 
@@ -49,6 +52,9 @@ class Profile {
     return Profile(
       name: json['name'] as String,
       image: json['image'] as String,
+      level: json['level'] as int,
+      xp: json['xp'] as int,
+      xpToNextLevel: json['xpToNextLevel'] as int,
     );
   }
 }

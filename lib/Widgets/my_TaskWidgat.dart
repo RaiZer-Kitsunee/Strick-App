@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:strick_app/Keys/storage_keys.dart';
 import 'package:strick_app/Services/dailyTasksService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
 import 'package:strick_app/Widgets/my_BSheetEdit.dart';
@@ -30,9 +31,9 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
   //* save level of the player
   void saveLevelToSp() async {
     SharedPreferences prefe = await SharedPreferences.getInstance();
-    prefe.setInt("level", myProfile.level);
-    prefe.setInt("xp", myProfile.xp);
-    prefe.setInt("xpToNextLevel", myProfile.xpToNextLevel);
+    prefe.setInt(levelKey, myProfile.level);
+    prefe.setInt(xpKey, myProfile.xp);
+    prefe.setInt(xpToNextLevelKey, myProfile.xpToNextLevel);
     print("save complete");
   }
 

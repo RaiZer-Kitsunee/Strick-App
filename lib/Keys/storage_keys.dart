@@ -10,3 +10,9 @@ const String notesKey = "note";
 const String nameKey = "name";
 
 const String themeKey = "theme";
+
+const String levelKey = "levelup";
+
+const String xpKey = "xpp";
+
+const String xpToNextLevelKey = "xpToNextLevelup";
