@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:strick_app/Keys/storage_keys.dart';

@@ -98,7 +98,7 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                             onChanged: (value) async {
                               //* here i will give random xp to task every time i finish
                               filteredDailyTasks[widget.simpleindex].xp =
-                                  myProfile.addRandomXp();
+                                  myProfile.addRandomXp(false);
                               //* the reset of the function
                               filteredDailyTasks[widget.simpleindex].isDone =
                                   value!;

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -19,7 +21,7 @@ class _MyCNBState extends State<MyCNB> {
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
       color: Theme.of(context).colorScheme.secondary,
-      backgroundColor: widget.selectedIndex == 3
+      backgroundColor: widget.selectedIndex == 2
           ? Theme.of(context).colorScheme.secondary
           : Theme.of(context).colorScheme.surface,
       animationDuration: const Duration(milliseconds: 500),

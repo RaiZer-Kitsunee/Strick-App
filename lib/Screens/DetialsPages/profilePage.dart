@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 
 import 'dart:io';
 
@@ -211,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     MySettingTile(
                         title: "Version",
                         onTap: () {},
-                        prefix: Text("2.7"),
+                        prefix: Text("3.0"),
                         isCustom: true),
                   ],
                 ),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +27,7 @@ Future<void> saveTasksIntoSp() async {
 //* add Simple Tasks
 void addDailyTasks({required String name, required String descrption}) {
   dailyTasksList.add(DailyTask(
-      title: name, descrption: descrption, xp: myProfile.addRandomXp()));
+      title: name, descrption: descrption, xp: myProfile.addRandomXp(true)));
   saveTasksIntoSp();
 }
 

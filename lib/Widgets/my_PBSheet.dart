@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/projectService.dart';
 
@@ -42,7 +44,7 @@ void myPBSheet({
                     prefixIcon: Icon(Icons.edit_square),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.secondary,
-                    hintText: "First Task...",
+                    hintText: "First...",
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),

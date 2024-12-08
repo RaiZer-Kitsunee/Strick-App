@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
@@ -22,7 +24,6 @@ class MyProjectWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           child: Container(
             decoration: BoxDecoration(
-              // TODO: make a backImages for the projects
               color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.all(
                 Radius.circular(40),

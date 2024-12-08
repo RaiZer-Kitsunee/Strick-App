@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:strick_app/Models/dailyTaskModel.dart';
 import 'package:strick_app/Services/dailyTasksService.dart';

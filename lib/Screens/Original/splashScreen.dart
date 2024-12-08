@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 
 import 'dart:convert';
 
@@ -107,17 +107,16 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Colors.black,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 205),
-              child: Icon(
-                Icons.app_registration,
-                size: 120,
-                color: Theme.of(context).colorScheme.surface,
+              padding: const EdgeInsets.only(bottom: 195),
+              child: Image.asset(
+                "assets/cube-3d.png",
+                scale: 3,
               ),
             ),
             Padding(

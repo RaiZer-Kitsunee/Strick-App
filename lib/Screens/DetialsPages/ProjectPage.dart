@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/projectService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';
@@ -245,37 +247,40 @@ class _ProjectPageState extends State<ProjectPage> {
           projectsList[widget.indexProject].inerTasks.isEmpty
               ? IfThereIsNOProjectTasks(context)
               : SizedBox(
-                  height: MediaQuery.sizeOf(context).height / 1.80,
+                  height: selectedObjetct
+                      ? (MediaQuery.sizeOf(context).height / 1.75)
+                      : (MediaQuery.sizeOf(context).height / 1.50),
                   child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount:
-                          projectsList[widget.indexProject].inerTasks.length,
-                      itemBuilder: (context, index) {
-                        isIndex(index: index);
-                        return MyTimeline(
-                          key: ValueKey(
-                            projectsList[widget.indexProject].inerTasks[index],
-                          ),
-                          refrech: () {
-                            setState(() {});
-                            widget.refrech();
-                          },
-                          projectIndex: widget.indexProject,
-                          taskIndex: index,
-                          title: projectsList[widget.indexProject]
-                              .inerTasks[index]
-                              .title,
-                          isFirst: index == 0 ? true : false,
-                          isLast: index ==
-                                  projectsList[widget.indexProject]
-                                          .inerTasks
-                                          .length -
-                                      1
-                              ? true
-                              : false,
-                        );
-                      }),
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount:
+                        projectsList[widget.indexProject].inerTasks.length,
+                    itemBuilder: (context, index) {
+                      isIndex(index: index);
+                      return MyTimeline(
+                        key: ValueKey(
+                          projectsList[widget.indexProject].inerTasks[index],
+                        ),
+                        refrech: () {
+                          setState(() {});
+                          widget.refrech();
+                        },
+                        projectIndex: widget.indexProject,
+                        taskIndex: index,
+                        title: projectsList[widget.indexProject]
+                            .inerTasks[index]
+                            .title,
+                        isFirst: index == 0 ? true : false,
+                        isLast: index ==
+                                projectsList[widget.indexProject]
+                                        .inerTasks
+                                        .length -
+                                    1
+                            ? true
+                            : false,
+                      );
+                    },
+                  ),
                 )
         ],
       ),

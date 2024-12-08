@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/backUpService.dart';
 import 'package:strick_app/Shared/allTheLists.dart';

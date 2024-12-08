@@ -1,15 +1,15 @@
 # flutter pub run flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/icons/Strickicon.png"
+  image_path: "assets/cube-3d.png"
 
   android: "launcher_icon"
   # image_path_android: "assets/icon/icon.png"
-  min_sdk_android: 16 # android min sdk min:16, default 21
-  adaptive_icon_background: "assets/icons/Strickicon_background.png"
-  adaptive_icon_foreground: "assets/icons/Strickicon_foreground.png"
-  adaptive_icon_monochrome: "assets/icons/Strickicon_monochrome.png"
+  min_sdk_android: 23 # android min sdk min:16, default 21
+  adaptive_icon_background: "#030000"
+  adaptive_icon_foreground: "assets/cube-3d.png"
+  # adaptive_icon_monochrome: "assets/icon/monochrome.png"
 
-  ios: false
+  ios: true
   # image_path_ios: "assets/icon/icon.png"
   remove_alpha_channel_ios: true
   # image_path_ios_dark_transparent: "assets/icon/icon_dark.png"

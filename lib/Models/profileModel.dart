@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names
 import 'dart:math';
 
 class Profile {
@@ -17,11 +17,13 @@ class Profile {
     this.xpToNextLevel = 1000,
   });
 
-  int addRandomXp() {
+  int addRandomXp(bool display) {
     int minXp = 10 * level;
     int maxXp = 20 * level;
     int randomXp = _random.nextInt(maxXp - minXp + 1) + minXp;
-    addXp(randomXp);
+    if (!display) {
+      addXp(randomXp);
+    }
     return randomXp;
   }
 

@@ -155,13 +155,13 @@ class _HomePageState extends State<HomePage> {
                           Stack(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 15),
+                                padding: const EdgeInsets.only(left: 23),
                                 child: InkWell(
                                   onTap: () async {
                                     await NotificationService.showNotification(
-                                      title: "Wisdom of the day",
-                                      body: animeQuotes[
-                                          random.nextInt(animeQuotes.length)],
+                                      title: "Easter Egg",
+                                      body: comebackSayings[random
+                                          .nextInt(comebackSayings.length)],
                                     );
                                   },
                                   child: CircleAvatar(
@@ -171,16 +171,16 @@ class _HomePageState extends State<HomePage> {
                                         ? AssetImage(
                                             "assets/computer-icons-user.png")
                                         : FileImage(File(myProfile.image)),
-                                    radius: 35,
+                                    radius: 30,
                                   ),
                                 ),
                               ),
                               Positioned(
-                                top: 53,
-                                left: 65,
+                                top: 48,
+                                left: 68,
                                 child: Container(
-                                  height: 14,
-                                  width: 14,
+                                  height: 12,
+                                  width: 12,
                                   decoration: BoxDecoration(
                                     color: Colors.green,
                                     shape: BoxShape.circle,
@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 12),
+                            padding: const EdgeInsets.only(right: 16),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,19 +257,30 @@ class _HomePageState extends State<HomePage> {
                                     width: selectedLevel ? 240 : 40,
                                     height: selectedLevel ? 60 : 5,
                                     decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: selectedLevel
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .secondary
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: selectedLevel
                                         ? Center(
-                                            child: Text(
-                                              "Keep Going",
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .surface,
-                                                fontWeight: FontWeight.bold,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                animeQuotes[random.nextInt(
+                                                    animeQuotes.length)],
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .surface,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
                                               ),
                                             ),
                                           )
@@ -307,7 +318,8 @@ class _HomePageState extends State<HomePage> {
                               onPressedAdd: () {
                                 addProject(
                                     title: projectsController.text,
-                                    object: "in till i do object");
+                                    object:
+                                        "Hmm,Empty want clear the way by having an object");
                                 setState(() {
                                   projectsController.clear();
                                   selected = !selected;

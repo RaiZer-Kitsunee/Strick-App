@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:strick_app/Services/dailyTasksService.dart';
 
@@ -18,7 +20,7 @@ void myBSheetEdit({
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          height: 340,
+          height: 320,
           child: Column(
             children: [
               Padding(
