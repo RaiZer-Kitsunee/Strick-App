@@ -57,24 +57,6 @@ Future<bool?> myAlertBSheet({
   );
 }
 
-// import 'package:flutter/material.dart';
-
-// class MyAlertBSheet extends StatelessWidget {
-//   const MyAlertBSheet({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       backgroundColor: Theme.of(context).colorScheme.secondary,
-//       title:
-// content:
-//       actions: [
-
-//       ],
-//     );
-//   }
-// }
-
 Padding dialogbutton(
     {required BuildContext context,
     required String name,
