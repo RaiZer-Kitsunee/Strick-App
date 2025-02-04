@@ -25,9 +25,16 @@ Future<void> saveTasksIntoSp() async {
 }
 
 //* add Simple Tasks
-void addDailyTasks({required String name, required String descrption}) {
-  dailyTasksList.add(DailyTask(
-      title: name, descrption: descrption, xp: myProfile.addRandomXp(true)));
+void addDailyTasks(
+    {required String name, required String descrption, required bool isMain}) {
+  dailyTasksList.add(
+    DailyTask(
+      title: name,
+      descrption: descrption,
+      xp: myProfile.addRandomXp(true),
+      isMain: isMain,
+    ),
+  );
   saveTasksIntoSp();
 }
 

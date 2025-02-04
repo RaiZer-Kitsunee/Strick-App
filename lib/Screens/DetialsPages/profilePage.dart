@@ -211,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     MySettingTile(
                         title: "Version",
                         onTap: () {},
-                        prefix: Text("3.0"),
+                        prefix: Text("3.2"),
                         isCustom: true),
                   ],
                 ),

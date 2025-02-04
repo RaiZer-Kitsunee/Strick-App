@@ -163,7 +163,9 @@ class _MyTaskWidgetState extends State<MyTaskWidget> {
                   ? MediaQuery.sizeOf(context).width
                   : 10,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
+                color: filteredDailyTasks[widget.simpleindex].isMain
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.secondary,
                 borderRadius: filteredDailyTasks[widget.simpleindex].isDone
                     ? BorderRadius.all(
                         Radius.circular(15),
